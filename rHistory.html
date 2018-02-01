@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>故事树</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- No Baidu Siteapp-->
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- Add to homescreen for Chrome on Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<!-- Add to homescreen for Safari on iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+
+	<body>
+		<div class="stapp" id="rhistory">
+			<input type="hidden" name="" value="" id="allpage" />
+			<div class="rHlist">
+				<div class="title">微信充值</div>
+				<div class="time">2017-12-07 19:44:25</div>
+				<div class="rMoney">+100.00</div>
+			</div>
+			<div class="rHlist">
+				<div class="title">微信充值</div>
+				<div class="time">2017-12-07 19:44:25</div>
+				<div class="rMoney">+100.00</div>
+			</div>
+			<div class="rHlist">
+				<div class="title">微信充值</div>
+				<div class="time">2017-12-07 19:44:25</div>
+				<div class="rMoney">+100.00</div>
+			</div>
+			<div class="rHlist">
+				<div class="title">微信充值</div>
+				<div class="time">2017-12-07 19:44:25</div>
+				<div class="rMoney">+100.00</div>
+			</div>
+			<div class="rHlist">
+				<div class="title">微信充值</div>
+				<div class="time">2017-12-07 19:44:25</div>
+				<div class="rMoney">+100.00</div>
+			</div>
+			<div class="rHlist">
+				<div class="title">微信充值</div>
+				<div class="time">2017-12-07 19:44:25</div>
+				<div class="rMoney">+100.00</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		checkAIEnter("back", "交易记录", "", 2);
+		var page = 1;
+		scrollpage('true');
+
+		function defaultdata(loadding) {
+			if (loadding == 1) {
+				$(".allloadding").show();
+			} else if (loadding == 2) {
+				$(".uploadding").show();
+			}
+			$.ajax({
+				type: 'POST',
+				url: url + 'app/accountRechargeRecord/queryList.do',
+				data: {
+					page: page,
+					accountId: window.localStorage.getItem("accountId")
+				},
+				dataType: 'json',
+				success: function(data) {
+					if (data.data.length == 0) {
+						$(".noshujubox").show();
+					} else {
+						for (var i = 0; i < data.length; i++) {
+							$("#rhistory").append("<div class='rHlist'><div class='title'>微信充值</div><div class='time'>" + getLocalTime(data[i].rechargeTime) + "</div><div class='rMoney'>+" + data[i].rechargeMoney + "</div></div>");
+						}
+					}
+					$("#allpage").val(data.pageSize);
+					$(".allloadding").hide();
+					$(".uploadding").hide();
+				},
+				error: function(xhr, error, ex) {
+					if (xhr.status == '404') {
+						window.location.href = "nohtml.html";
+					}
+					if (xhr.status == '500') {
+						window.location.href = "nohtml.html";
+					}
+				}
+			});
+		}
+		defaultdata(1);
+	</script>
+
+</html>

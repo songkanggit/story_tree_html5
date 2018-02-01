@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>故事树</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- No Baidu Siteapp-->
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- Add to homescreen for Chrome on Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<!-- Add to homescreen for Safari on iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/stapp.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/swiper.jquery.min.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/stapp.js"></script>
+	</head>
+
+	<body>
+		<div class="stapp">
+			<input type="hidden" name="" value="" id="allpage" />
+			<div class="commentbox" id="commentbox">
+				<div class="commentlist">
+					<div class="comment_headimg"><img src="img/rebouimg.png" alt="img/rebouimg.png" /></div>
+					<div class="comment_con">
+						<div class="comment_title">
+							<p>Chainsmokers</p>
+							<div class="fabulous">4387</div>
+						</div>
+						<div class="comment_text">爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉</div>
+					</div>
+				</div>
+				<div class="commentlist">
+					<div class="comment_headimg"><img src="img/rebouimg.png" alt="img/rebouimg.png" /></div>
+					<div class="comment_con">
+						<div class="comment_title">
+							<p>Chainsmokers</p>
+							<div class="fabulous">4387</div>
+						</div>
+						<div class="comment_text">爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉</div>
+					</div>
+				</div>
+				<div class="commentlist">
+					<div class="comment_headimg"><img src="img/rebouimg.png" alt="img/rebouimg.png" /></div>
+					<div class="comment_con">
+						<div class="comment_title">
+							<p>Chainsmokers</p>
+							<div class="fabulous">4387</div>
+						</div>
+						<div class="comment_text">爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉</div>
+					</div>
+				</div>
+				<div class="commentlist">
+					<div class="comment_headimg"><img src="img/rebouimg.png" alt="img/rebouimg.png" /></div>
+					<div class="comment_con">
+						<div class="comment_title">
+							<p>Chainsmokers</p>
+							<div class="fabulous">4387</div>
+						</div>
+						<div class="comment_text">爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉</div>
+					</div>
+				</div>
+				<div class="commentlist">
+					<div class="comment_headimg"><img src="img/rebouimg.png" alt="img/rebouimg.png" /></div>
+					<div class="comment_con">
+						<div class="comment_title">
+							<p>Chainsmokers</p>
+							<div class="fabulous">4387</div>
+						</div>
+						<div class="comment_text">爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉爱冒险的卡梅拉</div>
+					</div>
+				</div>
+			</div>
+			<div class="commentinputbox">
+				<div class="commentinput">
+					<input type="text" name="" value="" placeholder="写留言" id="commenttext" />
+				</div>
+				<div class="commentsend">发送</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		var page = 1;
+
+		function addcomment() {
+			$(".allloadding").show();
+			$.ajax({
+				type: 'POST',
+				url: url + 'comment/add.do',
+				data: {
+					accountId: window.localStorage.getItem("accountId"),
+					melodyId: melodyId,
+					comment: $("#commenttext").val()
+				},
+				dataType: 'json',
+				success: function(data) {
+					if (data.state == true) {
+						$("#commentbox").empty();
+						page = 1;
+						defaultdata();
+					} else {
+						showalert("数据错误，请重试");
+					}
+				},
+				error: function(xhr, error, ex) {
+					if (xhr.status == '404') {
+						window.location.href = "nohtml.html";
+					}
+					if (xhr.status == '500') {
+						window.location.href = "nohtml.html";
+					}
+				}
+			});
+		}
+		//		评论列表初始化
+		function defaultdata(loadding) {
+			if (loadding == 1) {
+				$(".allloadding").show();
+			} else if (loadding == 2) {
+				$(".uploadding").show();
+			}
+			$.ajax({
+				type: 'POST',
+				url: url + 'comment/queryList.do',
+				data: {
+					page: page,
+					melodyId: melodyId
+				},
+				dataType: 'json',
+				success: function(data) {
+					if (data.length == 0) {
+						$(".noshujubox").show();
+					} else {
+						for (var i = 0; i < data.data.melodyList.length; i++) {
+							$("#commentbox").append("<div class='commentlist'><div class='comment_headimg'><img src='img/loginhead.png' alt='img/loginhead.png' /></div><div class='comment_con'><div class='comment_title'><p>Chainsmokers</p><div class='fabulous''>4387</div></div><div class='comment_text'>" + data[i].comment + "</div></div></div>");
+						}
+					}
+					$("#allpage").val(data.pageSize);
+					$(".allloadding").hide();
+					$(".uploadding").hide();
+				},
+				error: function(xhr, error, ex) {
+					if (xhr.status == '404') {
+						window.location.href = "nohtml.html";
+					}
+					if (xhr.status == '500') {
+						window.location.href = "nohtml.html";
+					}
+				}
+			});
+		}
+		defaultdata(1)
+		scrollpage('true');
+	</script>
+
+</html>

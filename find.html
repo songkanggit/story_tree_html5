@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>故事树</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- No Baidu Siteapp-->
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- Add to homescreen for Chrome on Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<!-- Add to homescreen for Safari on iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+
+	<body>
+		<div class="stapp">
+			<input type="hidden" name="" value="" id="allpage" />
+			<div class="findbox" id="findbox">
+			</div>
+		</div>
+	</body>
+	<script>
+		var page = 1;
+		//		发现数据初始化
+		function defaultdata() {
+			$(".noshujubox").hide();
+			$(".allloadding").show();
+			$.ajax({
+				type: 'POST',
+				url: url + 'article/queryList.do',
+				data: {
+					page: page,
+					isPublished: 1
+				},
+				dataType: 'json',
+				success: function(data) {
+					if(data.data.length == 0){
+						$(".noshujubox").show();
+					}else{
+						for (var i = 0; i < data.data.length; i++) {
+							$("#findbox").append("<div class='findlist' onclick='tofindinfo(this," + data.data[i].id + ")'><div class='find_img'><img src='" + url + data.data[i].coverImageUrl + "' alt='" + url + data.data[i].coverImageUrl + "' /></div><div class='find_con'><div class='find_title'>" + data.data[i].articleTitle + "</div><div class='find_author'>作者:" + data.data[i].articleTitle + "</div><div class='find_text'>" + data.data[i].summary + "</div><div class='find_dir'><div class='find_seeshu'>" + data.data[i].pageView + "</div><div class='find_time'>" + getLocalTime(data.data[i].createTime) + "</div></div></div></div>")
+						}
+					}
+					$("#allpage").val(data.pageSize);
+					$(".allloadding").hide();
+				},
+				error: function(xhr, error, ex) {
+					if (xhr.status == '404') {
+						window.location.href = "nohtml.html";
+					}
+					if (xhr.status == '500') {
+						window.location.href = "nohtml.html";
+					}
+				}
+			});
+		}
+		defaultdata();
+		scrollpage('true');
+//		跳转发现详情
+		function tofindinfo(t, id) {
+			rount('find', 'findInfo', function() {
+				window.localStorage.setItem("findtitle", $(t).find(".find_title").text())
+				window.localStorage.setItem("findId", id);
+			});
+		}
+	</script>
+
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>故事树</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- No Baidu Siteapp-->
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- Add to homescreen for Chrome on Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<!-- Add to homescreen for Safari on iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+
+	<body>
+		<div class="stapp">
+			<!--轮播图-->
+			<div class="banner">
+				<div class="swiper-container">
+					<div class="swiper-wrapper">
+						<div class="swiper-slide">
+							<a><img src="img/1.jpg" alt="img/1.jpg" id="25" datasrc="img/1.jpg" data="杨梅，橙子，蓝莓，西瓜" name="/MelodyCache/0bb6c61a711d4f4aa570d4124731058c.mp3" title="咕咚来了" /></a>
+						</div>
+						<div class="swiper-slide">
+							<a><img src="img/2.jpg" alt="img/2.jpg" id="22" datasrc="img/2.jpg" data="杨梅" name="/MelodyCache/dca4830dbfd247f184c134d4b206e641.mp3" title="雪地里的脚印" /></a>
+						</div>
+						<div class="swiper-slide">
+							<a><img src="img/3.jpg" alt="img/3.jpg" id="55" datasrc="img/3.jpg" data="杨梅，西柚，榴莲" name="/MelodyCache/8a17a1ed9ab444e7b96dc5994096c61a.mp3" title="长颈鹿与小山羊" /></a>
+						</div>
+					</div>
+					<!-- 分页器 -->
+					<div class="swiper-pagination"></div>
+				</div>
+			</div>
+			<ul class="classifybox">
+				<li name="讲故事" onclick="toablumorsreach(this,2)">
+					<div class="classifylogo saystroy"></div>
+					<div class="classifytext">讲故事</div>
+				</li>
+				<li name="听儿歌" onclick="toablumorsreach(this,2)">
+					<div class="classifylogo listensong"></div>
+					<div class="classifytext">听儿歌</div>
+				</li>
+				<li name="学知识" onclick="toablumorsreach(this,2)">
+					<div class="classifylogo studythings"></div>
+					<div class="classifytext">学知识</div>
+				</li>
+				<li name="读国学" onclick="toablumorsreach(this,2)">
+					<div class="classifylogo readcounty"></div>
+					<div class="classifytext">读国学</div>
+				</li>
+				<li>
+					<div class="classifylogo classify"></div>
+					<div class="classifytext">分类</div>
+				</li>
+			</ul>
+			<div class="reboutitle">精品推荐</div>
+			<ul class="rebou" id="rebou">
+				<div class="localloadding"></div>
+			</ul>
+		</div>
+	</body>
+	<script>
+		$(function() {
+				banner();
+				defaultdata();
+			})
+			//轮播图方法
+		function banner() {
+			var mySwiper = new Swiper('.swiper-container', {
+				height: 320,
+				direction: 'horizontal',
+				loop: true,
+				autoplay: 3000,
+				speed: 300,
+				autoplayDisableOnInteraction: false,
+				// 如果需要分页器
+				pagination: '.swiper-pagination',
+				paginationClickable: true,
+			})
+		}
+		//		首页初始化
+		function defaultdata() {
+			$(".allloadding").show();
+			$("#rebou").empty();
+			$.ajax({
+				type: 'POST',
+				url: url + 'album/queryList.do',
+				dataType: 'json',
+				success: function(data) {
+					for (var i = 0; i < data.data.length; i++) {
+						$("#rebou").append("<li name='" + data.data[i].albumName + "' title='" + data.data[i].albumCoverImage + "' onclick='toablumorsreach(this,1)'><div class='rebou_img'><img src='" + url + data.data[i].albumCoverImage + "' alt='" + url + data.data[i].albumCoverImage + "' /></div><div class='rebou_text'>" + data.data[i].albumName + "</div></li>")
+					}
+					$(".allloadding").hide();
+				},
+				error: function(xhr, error, ex) {
+					defaultdata();
+				}
+			});
+		}
+		//		跳转专辑曲目或者搜索
+		function toablumorsreach(t, tp) {
+			if (tp == 1) {
+				rount('index', 'albuminfo', function() {
+					window.localStorage.setItem('keyword', $(t).attr("name"));
+					window.localStorage.setItem('albumCoverImage', $(t).attr("title"));
+				})
+			} else if (tp == 2) {
+				rount('index', 'classifyinfo', function() {
+					window.localStorage.setItem("cty", "1");
+					window.localStorage.setItem('keyword', $(t).attr("name"));
+				})
+			}
+		}
+		scrollpage('false');
+	</script>
+
+</html>

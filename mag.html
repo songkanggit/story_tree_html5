@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>故事树</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- No Baidu Siteapp-->
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- Add to homescreen for Chrome on Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<!-- Add to homescreen for Safari on iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+
+	<body>
+		<div class="stapp">
+			<input type="hidden" name="" value="" id="allpage" />
+			<div class="topbox">
+				<div class="top">
+					<div class="allselect" onclick="allselect(this);">全选</div>
+				</div>
+			</div>
+			<ul class="listbox" id="listbox">
+			</ul>
+			<div class="magfixed">
+				<div class="magopera" onclick="tostoryarr()">
+					<div class="operalogo operalogo1"></div>
+					<div class="operatext">添加到</div>
+				</div>
+				<div class="magopera">
+					<div class="operalogo operalogo3"></div>
+					<div class="operatext">下载</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		checkAIEnter("back", window.localStorage.getItem("keyword"), "", 2);
+		var magarr = [];
+		var page = 1;
+		//		跳转故事集
+		function tostoryarr() {
+			judelogin(function() {
+				showalert("请先登录您的账号");
+			}, function() {
+				if (magarr.length == 0) {
+					showalert("请选择曲目");
+				} else {
+					rount('mag', 'storyarr', function() {
+						var magarrtext = magarr.toString();
+						window.localStorage.setItem("magarr", magarrtext);
+						window.localStorage.setItem('st', "addto");
+					});
+				}
+			})
+		}
+		//		管理数据初始化
+		function defaultdata(loadding) {
+			if(loadding == 1){
+				$(".allloadding").show();
+			}else if(loadding == 2){
+				$(".uploadding").show();
+			}
+			$.ajax({
+				type: 'POST',
+				url: url + 'melody/queryList.do',
+				data: {
+					page: page,
+					Blur: window.localStorage.getItem("keyword")
+				},
+				dataType: 'json',
+				success: function(data) {
+					for (var i = 0; i < data.data.melodyList.length; i++) {
+						$("#listbox").append("<li><div class='listimg'><img src='" + url + data.data.melodyList[i].melodyCoverImage + "' alt='" + url + data.data.melodyList[i].melodyCoverImage + "' /></div><div class='listcon'><p class='contitle'>" + data.data.melodyList[i].melodyName + "</p><p class='condir'>" + data.data.melodyList[i].melodyArtist + "·" + data.data.melodyList[i].melodyAlbum + "</p><div id='" + data.data.melodyList[i].id + "' class='magselect' onclick='oneselect(this," + data.data.melodyList[i].id + ")'></div></div></li>")
+					}
+					$("#allpage").val(data.pageSize);
+					$(".allloadding").hide();
+					$(".uploadding").hide();
+				},
+				error: function(xhr, error, ex) {
+					if (xhr.status == '404') {
+						window.location.href = "nohtml.html";
+					}
+					if (xhr.status == '500') {
+						window.location.href = "nohtml.html";
+					}
+				}
+			});
+		}
+		defaultdata(1);
+		scrollpage('true');
+	</script>
+
+</html>

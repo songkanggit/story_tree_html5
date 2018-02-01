@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>故事树</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta content="telephone=no" name="format-detection" />
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- No Baidu Siteapp-->
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- Add to homescreen for Chrome on Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<!-- Add to homescreen for Safari on iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="css/reset.css" />
+		<link rel="stylesheet" href="css/stapp.css" />
+		<link rel="stylesheet" href="css/swiper.min.css" />
+		<script src="js/jquery-1.9.1.min.js"></script>
+		<script src="js/jquery.form.js"></script>
+		<script src="js/swiper.jquery.min.js"></script>
+		<script src="js/common.js"></script>
+		<script src="js/stapp.js"></script>
+	</head>
+
+	<body>
+		<div id="mainbox"></div>
+		<div class="alertbox">
+			<div class="alert">
+				<div class="con"></div>
+				<div class="alertbtn">
+					<div class="alerttrue" onclick="truealert();">确定</div>
+				</div>
+			</div>
+		</div>
+		<div class="confirmbox">
+			<div class="confirm">
+				<div class="con"></div>
+				<div class="confirmbtn">
+					<div class="confirmtrue" onclick="trueconfirm(truefunc)">确定</div>
+					<div class="confirmfalse" onclick="falseconfirm()">取消</div>
+				</div>
+			</div>
+		</div>
+		<div class="allloadding"></div>
+		<div class="noshujubox">
+			<div class="noshuju">
+				<div class="noshujulogo"></div>
+				<div class="noshujutext">暂时还没有内容哦！</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		loadfind();
+		//返回
+		window.loadHistoryPage = function() {
+				$("#mainbox").load(window.localStorage.getItem("historyhtml"));
+			}
+	</script>
+
+</html>

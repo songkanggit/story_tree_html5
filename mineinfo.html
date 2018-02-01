@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>故事树</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta content="telephone=no" name="format-detection" />
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- No Baidu Siteapp-->
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- Add to homescreen for Chrome on Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<!-- Add to homescreen for Safari on iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+
+	<body>
+		<div class="stapp">
+			<div class="mineinfo">
+				<div class="headimg" onclick="uploadimg();">头像
+					<div class="img"><img src="img/loginlogo.png" alt="img/loginlogo.png" /></div>
+				</div>
+				<div class="name" onclick="showchange(this);">昵称
+					<div class="name_text">15932119504</div>
+				</div>
+				<div class="name" style="background: none;">手机号
+					<div class="name_text">15932119504</div>
+				</div>
+			</div>
+			<div class="quit" onclick="quit()">安全退出</div>
+		</div>
+		<div class="editname">
+			<div class="closemask" onclick="closemask('editname')"></div>
+			<div class="editbox">
+				<div class="editinput"><input type="text" name="" value="" id="name" placeholder="0/11" /></div>
+				<div class="true" onclick="">确定</div>
+			</div>
+		</div>
+		<form method="post" action="" enctype="multipart/form-data" id="coverImage" style="display: none;">
+			<input type="text" name="fileName" id="Imagetext" value="" />
+			<input type="file" name="" value="" id="headimg" accept="image/*" onchange="subimtimgBtn();" />
+		</form>
+	</body>
+	<script>
+		checkAIEnter("back", "个人中心", "", 1);
+
+		function showchange(t, et) {
+			$(".editname input").val($(t).find(".name_text").text())
+			$(".editname").show();
+			$(".editname .true").attr("onclick", "editname()");
+		}
+
+		function editname() {}
+
+		loadclosemaskheight();
+		scrollpage('false');
+	</script>
+
+</html>

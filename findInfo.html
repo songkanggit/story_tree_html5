@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>故事树</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- No Baidu Siteapp-->
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- Add to homescreen for Chrome on Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<!-- Add to homescreen for Safari on iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+
+	<body>
+		<div class="stapp">
+			<div class="findInfo" id="findInfo">
+				<div class="infotitle"></div>
+				<div class="infoauthor">
+					<div class="author"></div>
+					<div class="time"></div>
+				</div>
+				<div class="con">
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		checkAIEnter("back", window.localStorage.getItem("findtitle"), "", 1);
+		//		新增浏览量
+		function addPageView() {
+			$.ajax({
+				type: 'POST',
+				url: url + 'article/increasePageView.do',
+				data: {
+					id: window.localStorage.getItem("findId")
+				},
+				dataType: 'json',
+				success: function(data) {
+					if (data.state == true) {
+						console.log("新增浏览量成功");
+					} else {
+						console.log("新增浏览量失败");
+					}
+				},
+				error: function(xhr, error, ex) {
+					if (xhr.status == '404') {
+						window.location.href = "nohtml.html";
+					}
+					if (xhr.status == '500') {
+						window.location.href = "nohtml.html";
+					}
+				}
+			});
+		}
+		//		发现详情数据初始化
+		function defaultdata() {
+			$("#findInfo").empty();
+			$(".allloadding").show();
+			$.ajax({
+				type: 'POST',
+				url: url + 'article/query.do',
+				data: {
+					id: window.localStorage.getItem("findId")
+				},
+				dataType: 'json',
+				success: function(data) {
+					$("#findInfo").append("<div class='infotitle'>" + data.data.articleTitle + "</div><div class='infoauthor'><div class='author'>" + data.data.author + "</div><div class='time'>" + getLocalTime(data.data.createTime) + "</div></div><div class='con'>" + data.data.content + "</div></div>");
+					addPageView();
+					$(".allloadding").hide();
+				},
+				error: function(xhr, error, ex) {
+					if (xhr.status == '404') {
+						window.location.href = "nohtml.html";
+					}
+					if (xhr.status == '500') {
+						window.location.href = "nohtml.html";
+					}
+				}
+			});
+		}
+		defaultdata();
+		scrollpage('false');
+	</script>
+
+</html>

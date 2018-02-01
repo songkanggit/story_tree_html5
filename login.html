@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>故事树</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- No Baidu Siteapp-->
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- Add to homescreen for Chrome on Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<!-- Add to homescreen for Safari on iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+
+	<body>
+		<div class="login">
+			<div class="loginlogo"></div>
+			<div class="phone"><input type="text" name="" value="" id="username" placeholder="请输入手机号" /></div>
+			<div class="tokenbox">
+				<div class="token"><input type="text" name="" value="" id="checkma" placeholder="请输入验证码" /></div>
+				<div class="gettoken" id="getToken" onclick="getToken(this)">发送验证码</div>
+			</div>
+			<div class="loginbtn" onclick="checkToken();">登录</div>
+			<div class="elselogintitle">
+				<div class="line"></div>
+				<div class="text">其他登录方式</div>
+				<div class="line"></div>
+			</div>
+			<div class="elselogin">
+				<div class="elseloginlogo elseloginlogo1"></div>
+				<div class="elseloginlogo elseloginlogo2"></div>
+			</div>
+		</div>
+	</body>
+	<script>
+		if(window.localStorage.getItem("logintype") == 1){
+			$(".loginbtn").text("登录");
+			checkAIEnter("back", "登录", "", 1);
+		}else if(window.localStorage.getItem("logintype") == 2){
+			$(".loginbtn").text("注册");
+			checkAIEnter("back", "注册", "", 1);
+		}
+		//获取手机验证码 
+		function getToken(t) {
+			if ($("#username").val() == "") {
+				showalert("请输入手机号");
+			} else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($("#username").val()))){
+				showalert("请输入正确手机号");
+				$("#username").val('');
+			}else{
+				if ($(t).text() == "发送验证码" || $(t).text() == "重新发送") {
+					getTokentime();
+					$.ajax({
+						type: 'POST',
+						url: url + 'sms/requestToken.do',
+						data: {
+							telephone: $('#username').val()
+						},
+						dataType: 'json',
+						success: function(data) {},
+						error: function(xhr, error, ex) {
+							if (xhr.status == '404') {
+								window.location.href = "nohtml.html";
+							}
+							if (xhr.status == '500') {
+								window.location.href = "nohtml.html";
+							}
+						}
+					})
+				}
+			}
+		}
+		//校验手机验证码
+		function checkToken() {
+			if ($("#checkma").val() == "") {
+				showalert("请输入验证码");
+			} else if ($("#username").val() == "") {
+				showalert("请输入手机号");
+			}else if(!(/^1[3|4|5|8][0-9]\d{4,8}$/.test($("#username").val()))){
+				showalert("请输入正确手机号");
+				$("#username").val('');
+			}else if($("#checkma").val().length != 6){
+				showalert("验证码错误");
+				$("#checkma").val('')
+			}else {
+				$(".allloadding").show();
+				$.ajax({
+					type: 'POST',
+					url: url + 'sms/verifyToken.do',
+					data: {
+						token: $('#checkma').val(),
+						telephone: $('#username').val()
+					},
+					dataType: 'json',
+					success: function(data) {
+						if (data.state == true) {
+							window.localStorage.setItem("accountId", data.data);
+							window.localStorage.setItem("accountIdTelePhone", $('#username').val());
+							$("#mainbox").load("mine.html");
+							$(".allloadding").hide();
+						} else {
+							showalert("数据错误，请重试");
+						}
+					},
+					error: function(xhr, error, ex) {
+						if (xhr.status == '404') {
+							window.location.href = "nohtml.html";
+						}
+						if (xhr.status == '500') {
+							window.location.href = "nohtml.html";
+						}
+					}
+				})
+			}
+		}
+		scrollpage('false');
+	</script>
+
+</html>

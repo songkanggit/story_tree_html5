@@ -1,0 +1,260 @@
+/*框架外框*/
+body,html{background:#f4f5f7;}
+#mainbox{overflow: hidden;background:#fff;position: relative;margin-bottom: .98rem;border-top: .02rem solid #f4f5f7;}
+.stapp{overflow: hidden;background:#fff;position: relative;}
+/*首页*/
+/*轮播图*/
+.banner {width: 100%;height: 3.2rem;overflow: hidden;position: relative;}
+.banner a{display: block;width: 100%;height: 100%;}
+.banner img{width: 100%;height: 100%;}
+.banner .swiper-container{width: 100%;height: 100%;}
+.banner .swiper-pagination-bullet{background: #fff;opacity: 6;}
+.banner .swiper-pagination-bullet-active{background: #e53232;}
+/*分类*/
+.classifybox{width: 100%;height: .94rem;padding:.3rem 0rem .3rem 0rem;overflow: hidden;}
+.classifybox li{width: 20%;height: 100%;float: left;}
+.classifybox li .classifylogo{width: 100%;height: .52rem;background-repeat: no-repeat;background-position: center center;background-size: .62rem .52rem;}
+.classifybox li .classifytext{width: 100%;height: .42rem;font: .22rem/.42rem 黑体;color: #333;text-align: center;}
+.classifybox li .saystroy{background-image:url(../img/saystroy.png) ;}
+.classifybox li .listensong{background-image:url(../img/listensong.png) ;}
+.classifybox li .studythings{background-image:url(../img/studythings.png) ;}
+.classifybox li .readcounty{background-image:url(../img/readcounty.png) ;}
+.classifybox li .classify{background-image:url(../img/classify.png) ;}
+/*精品推荐*/
+.reboutitle{width: 100%;height: .96rem;font: .36rem/.96rem 黑体;color: #333;text-align: center;}
+.rebou{width: 100%;overflow: hidden;padding-top:.1rem;position: relative;}
+.rebou li{width: 2.44rem;height: 3.12rem;float: left;margin-right: .09rem;overflow: hidden;}
+.rebou li:nth-child(3n){margin: 0rem;}
+.rebou li .rebou_img{width:100%;height: 2.44rem;}
+.rebou li .rebou_img img{width:100%;height: 100%;}
+.rebou li .rebou_text{width: 100%;height: .68rem;font: .28rem/.68rem 黑体;color: #333;text-align: center;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+/*搜索页面*/
+/*搜索框*/
+.sreach{width: 6.9rem;height: .6rem;margin: .32rem auto;}
+.sreach .sreachinput{width: 5.25rem;height: 100%;padding-left: .65rem;background: #f3f3f3;border-radius:.1rem;position: relative;float: left;}
+.sreach .sreachinput input{width: 100%;height: 100%;border: none;outline: none;background: #f3f3f3;font: .28rem/.6rem 黑体;color: #999;}
+.sreach .sreachinput .sreachlogo{width: .28rem;height: .28rem;background: url(../img/sreach.png) no-repeat;background-size:.28rem .28rem;position: absolute;top: .16rem;left: .28rem;}
+.sreach .sreachtext{width: 1rem;height: 100%;font: .3rem/.6rem 黑体;color: #ff1f43;text-align: center;float: right;}
+/*搜索条件*/
+.sreachtitle{width: 6.3rem;height:.4rem;margin:.32rem auto;padding-left: .6rem;font: .36rem/.4rem 黑体;color: #333;background-repeat:no-repeat ;background-size: .4rem .4rem;}
+.sreachlogo1{background-image:url(../img/sreachlogo2.png) ;}
+.sreachlogo2{background-image:url(../img/sreachlogo1.png) ;}
+.sreachlogo3{background-image:url(../img/sreachlogo3.png) ;}
+.sreachlist{width: 6.9rem;margin:0rem auto;padding-bottom:.3rem;border-bottom:.02rem solid #e6e6e6;overflow: hidden;}
+.sreachlist li{padding: .16rem .24rem;font: .28rem/.28rem 黑体;color: #666;text-align: center;border:.02rem solid #999;border-radius:.29rem;float: left;margin-right:.2rem;margin-bottom:.2rem;}
+.sreachlist .selected{color: #fff;background: #ff1f43;}
+/*专辑，分类，列表*/
+.topbox{width:100%;height: .44rem;padding:.24rem 0rem .24rem 0rem;border-bottom: .02rem solid #f4f5f7;}
+.topbox .top{width: 7.1rem;height: 100%;margin: 0rem auto;overflow: hidden;}
+.topbox .top .allplayer{width: 1.85rem;height: 100%;padding-left: .65rem;font: .28rem/.44rem 黑体;color: #333;background-repeat:no-repeat ;background-size:.44rem .44rem ;float: left;}
+.topbox .top .allpayerlogo{background-image:url(../img/player.png) ;}
+.topbox .top .allpauselogo{background-image:url(../img/paused.png) ;}
+.topbox .top .mag{width: .6rem;height: 100%;padding-left: .65rem;font: .28rem/.44rem 黑体;color: #333;background-repeat:no-repeat ;background-size:.44rem .44rem ;float: right;}
+.topbox .top .maglogo{background-image:url(../img/mag.png) ;}
+.topbox .top .allselect{width: .96rem;height: 100%;font: .28rem/.44rem 黑体;color: #333;text-align: center;float: left;}
+.topbox .top .close{width: .96rem;height: 100%;font: .28rem/.44rem 黑体;color: #333;text-align: center;float:right;}
+/*列表*/
+.listbox{width: 7.1rem;margin:0rem auto;overflow: hidden;padding-top: .2rem;overflow: hidden;position: relative;}
+.listbox li{width: 100%;height: 1.3rem;margin-bottom: .1rem;}
+.listbox .listimg{width: 1.2rem;height: 1.2rem;float: left;}
+.listbox .listimg img{width: 100%;height: 100%;}
+.listbox .listcon{width:5.7rem;height: 100%;border-bottom: .02rem solid #f4f5f7;padding-left: .2rem;position: relative;float: right;}
+.listbox .listcon .conbox{width: 5rem;overflow: hidden;}
+.listbox li:last-child .listcon{border: none;}
+.listbox .listcon .contitle{width: 5rem;height: .68rem;font: .28rem/.68rem 黑体;color: #333;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+.listbox .listcon .condir{width: 5rem;height: .42rem;font: .22rem/.42rem 黑体;color: #666;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+.listbox .listcon .collection{width: .44rem;height: .44rem;background: url(../img/selectxin.png) no-repeat;background-size:100% 100%;position: absolute;top: .4rem;right: 0rem;}
+.listbox .listcon .magselect{width: .44rem;height: .44rem;background: url(../img/magselect.png) no-repeat;background-size:100% 100%;position: absolute;top: .4rem;right: 0rem;}
+.listbox .listcon .collectioned{background-image:url(../img/selectedxin.png) ;}
+.listbox .listcon .magselected{background-image:url(../img/magselected.png) ;}
+.listbox .listcon .del{width: .44rem;height: .44rem;background: url(../img/delthing.png) no-repeat;background-size:100% 100% ;position: absolute;top: .35rem;right: 0rem;}
+/*管理操作浮层*/
+.magfixed{display:none;width: 100%;height: .78rem;padding:.1rem 0rem .1rem 0rem;box-shadow: 0rem -.05rem .2rem 0rem #f1f1f1;background:#fff;position: fixed;bottom: 0rem;left: 0rem;z-index: 10;}
+.magfixed .magopera{width:50%;height: 100%;float: left;}
+.magfixed .magopera .operalogo{width: 100%;height: .44rem;background-repeat:no-repeat ;background-position: center center;background-size:.44rem .44rem ;}
+.magfixed .magopera .operalogo1{background-image:url(../img/add.png) ;}
+.magfixed .magopera .operalogo3{background-image:url(../img/doenload.png) ;}
+.magfixed .magopera .operatext{width: 100%;height: .4rem;font: .2rem/.4rem 黑体;color: #666;text-align: center;}
+/*评论列表浮层*/
+.commentinputbox{width: 90%;height: .78rem;padding:.1rem 5% .1rem 5%;box-shadow: 0rem -.05rem .2rem 0rem #f1f1f1;background:#fff;position: fixed;bottom: 0rem;left: 0rem;z-index: 10;}
+.commentinputbox .commentinput{width: 5.3rem;padding-left:.3rem;height: 100%;background: #efefef;border-radius:.36rem;float: left;overflow: hidden;}
+.commentinputbox .commentinput input{width: 100%;height: 100%;border: none;outline: none;background: #efefef;font: .3rem/.6rem 黑体;color: #999;}
+.commentinputbox .commentsend{width: 1rem;height: 100%;font: .3rem/.78rem 黑体;color: #999;text-align: center;float: right;}
+/*专辑详情*/
+.albumimg{width: 100%;height: 5rem;overflow: hidden;}
+.albumimg img{width: 100%;}
+.albumbox{width: 100%;overflow: hidden;border-bottom: .1rem solid #f4f5f7;}
+.albumbox .album{width: 7.1rem;overflow: hidden;padding:.3rem 0rem .3rem 0rem;margin: 0rem auto;}
+.albumbox .album .albumtitle{width: 100%;height: .3rem;margin-bottom:.2rem;font:bold .3rem/.3rem 黑体;color:#333;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+.albumbox .album .albumdir{width: 100%;overflow: hidden;font:.22rem/.34rem 黑体;color:#666;}
+/*评论列表*/
+.commentbox{width:7.1rem;overflow: hidden;margin:0rem auto;}
+.commentbox .commentlist{width: 100%;overflow: hidden;padding-top:.3rem;}
+.commentbox .commentlist .comment_headimg{width:.8rem;height: .8rem;float: left;border-radius:50%;overflow: hidden;}
+.commentbox .commentlist .comment_headimg img{width:100%;height: 100%;}
+.commentbox .commentlist .comment_con{width: 6rem;overflow: hidden;float: right;}
+.commentbox .commentlist .comment_con .comment_title{width: 100%;height: .3rem;position: relative;}
+.commentbox .commentlist .comment_con .comment_title p{width: 4.85rem;height: 100%;font:.3rem/.3rem 黑体;color:#333;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;float: left;}
+.commentbox .commentlist .comment_con .comment_title .fabulous{padding-right: .46rem;font: .28rem/.28rem 黑体;color: #666;background: url(../img/fabulous.png) center right no-repeat;background-size:.26rem .26rem;float: right;}
+.commentbox .commentlist .comment_con .comment_text{width: 100%;overflow: hidden;padding:.3rem 0rem .3rem 0rem;font: .28rem/.42rem 黑体;color: #666;border-bottom: .02rem solid #e6e6e6;}
+/*发现*/
+.findbox{width: 7.1rem;overflow: hidden;margin:0rem auto;padding-top:.1rem;padding-bottom:.1rem;}
+.findbox .findlist{width: 100%;overflow: hidden;padding-top:.1rem;}
+.findbox .findlist .find_img{width: 2rem;height: 2rem;float: left;border-radius: .6rem;}
+.findbox .findlist .find_img img{width: 100%;height: 100%;}
+.findbox .findlist .find_con{width: 4.9rem;overflow: hidden;float: right;}
+.findbox .findlist .find_con .find_title{width: 100%;height: .48rem;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;font: bold .28rem/.48rem 黑体;color: #333;}
+.findbox .findlist .find_con .find_author{width: 100%;height: .44rem;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;font: bold .24rem/.48rem 黑体;color: #666;}
+.findbox .findlist .find_con .find_text{width: 100%;height: .8rem;overflow:hidden;font: bold .24rem/.4rem 黑体;color: #666;}
+.findbox .findlist .find_con .find_dir{width: 100%;height: .26rem;padding-bottom: .1rem;border-bottom: .02rem solid #e5e5e5;}
+.findbox .findlist:last-child .find_con .find_dir{border: none;}
+.findbox .findlist .find_con .find_seeshu{padding-left: .4rem;font: .22rem/.26rem 黑体;color: #999;float: left;background: url(../img/find_seeshu.png) center left no-repeat;background-size: .26rem .26rem;}
+.findbox .findlist .find_con .find_time{font: .22rem/.26rem 黑体;color: #999;float: right;}
+/*发现详情*/
+.findInfo{width: 6.9rem;overflow: hidden;margin:0rem auto;padding-top:.1rem;}
+.findInfo .infotitle{width: 100%;height: 1.08rem;font: bold .48rem/1.08rem 黑体;color: #1a1a1a;}
+.findInfo .infoauthor{width: 100%;height: .32em;margin-bottom:.9rem}
+.findInfo .infoauthor .author{font: .32rem/.32rem 黑体;color: #808080;float: left;}
+.findInfo .infoauthor .time{font: .32rem/.32rem 黑体;color: #808080;float: right;}
+.findInfo .con{width: 100%;overflow: hidden;}
+.findInfo .con p{width: 100%;overflow: hidden;font: .32rem/.68rem 黑体;color: #1a1a1a;letter-spacing: .04rem;}
+.findInfo .con img{width: 100%;}
+/*我的*/
+.mine{width: 7.5rem;overflow: hidden;margin: 0rem auto;}
+.mine_head{width: 100%;height: 5.15rem;position: relative;}
+.mine_head .minehead{width: 100%;height: 1.6rem;padding-top:2.4rem;background: url(../img/minebg.png) no-repeat;background-size:100% 100%;position: relative;}
+.mine_head .minehead .minehead_img{width: 1.6rem;height: 1.6rem;position: absolute;top: .65rem;left: 2.95rem;border-radius: 50%;overflow: hidden;}
+.mine_head .minehead .minehead_img img{width: 100%;height: 100%;}
+.mine_head .minehead .VIP{width: .86rem;height: .42rem;position: absolute;top: 1.8rem;left: 3.3rem;background: url(../img/vip1.png) no-repeat;background-size:100% 100%;}
+.mine_head .minehead .VIPed{width: .86rem;height: .42rem;position: absolute;top: 1.8rem;left: 3.3rem;background: url(../img/vip2.png) no-repeat;background-size:100% 100%;}
+.mine_head .loginbtn{width: 1.6rem;height: .28rem;padding-top:.18rem;padding-bottom:.18rem;margin: 0rem auto;}
+.mine_head .myphone{width: 1.6rem;height: .28rem;padding-top:.18rem;padding-bottom:.18rem;margin: 0rem auto;font: .28rem/.28rem 黑体;color: #fff;text-align: center;}
+.mine_head .loginbtn .btn{width: .78rem;height: 100%;font: .28rem/.28rem 黑体;color: #fff;text-align: center;border-right: .02rem solid #fff;float: left;}
+.mine_head .loginbtn .btn:last-child{border: none;}
+.mine_head .mine_caozuo{width: 6.8rem;height: 1.7rem;border-radius: .06rem;background: #fff;position: absolute;bottom: .2rem;left: .35rem;}
+.mine_head .mine_caozuo .caozuobox{width: 33.33%;height: 100%;float: left;}
+.mine_head .mine_caozuo .caozuobox .caozuo_logo{width: 100%;height: 1rem;background-repeat:no-repeat ;background-position:center center;background-size:.44rem .44rem ;}
+.mine_head .mine_caozuo .caozuobox .caozuo_logo1{background-image: url(../img/xin.png);}
+.mine_head .mine_caozuo .caozuobox .caozuo_logo2{background-image: url(../img/downloadicon.png);}
+.mine_head .mine_caozuo .caozuobox .caozuo_logo3{background-image: url(../img/buy.png);}
+.mine_head .mine_caozuo .caozuobox .caozuo_text{width: 100%;height: .58rem;font: bold .24rem 黑体;color: #333;text-align: center;}
+.minelist{width: 7rem;overflow: hidden;background: #fff;padding: 0rem .2rem 0rem .3rem;margin:0rem auto;}
+.minelist li{width: 100%;overflow: hidden;position: relative;padding-top: .28rem;}
+.minelist .logo{width: .44rem;height: .44rem;float: left;background-repeat:no-repeat ;background-position:center center;background-size:100% 100% ; }
+.minelist .logo1{background-image: url(../img/storyarr.png);}
+.minelist .logo2{background-image: url(../img/moneybao.png);}
+.minelist .logo3{background-image: url(../img/chagevip.png);}
+.minelist .listname{width: 6.36rem;height: .44rem;font: .28rem/.44rem 黑体;color: #333;padding-bottom: .1rem;float: right;border-bottom: .02rem solid #f4f5f7;}
+.minelist li:last-child .listname{border: none;}
+.minelist .to{width: .24rem;height: .24rem;background: url(../img/to.png) no-repeat;background-size:100% 100%;position: absolute;top: .34rem;right: 0rem;}
+/*登录*/
+.login{width: 100%;height: 100%;position: fixed;top: 0rem;left: 0rem;background: url(../img/loginbottomimg.png) bottom center no-repeat;background-size:100% 2.5rem ;background-color: #fff ;}
+.login .loginlogo{width: 2.2rem;height: 2.2rem;border-radius: .08rem;margin: .76rem auto 1.1rem;background: url(../img/loginlogo.png) no-repeat;background-size:100% 100% ;}
+.login .phone{width: 5.64rem;padding-left:.66rem;height: .84rem;margin: 0rem auto;border-bottom: .02rem solid #999;overflow: hidden;background: url(../img/phone.png) 0rem center no-repeat;background-size:.36rem .36rem ;}
+.login input{width: 100%;height: 100%;font: .28rem/.84rem 黑体;color: #999;outline: none;border: none;}
+.login .tokenbox{width: 6.3rem;height: .84rem;margin: 0rem auto;}
+.login .tokenbox .token{width: 2.74rem;height: 100%;padding-left: .66rem;border-bottom: .02rem solid #999;float: left;overflow: hidden;background: url(../img/token.png) 0rem center no-repeat;background-size:.36rem .36rem ;}
+.login .tokenbox .gettoken{width: 2.2rem;height: .55rem;margin-top:.3rem;border-radius: .08rem;font: .28rem/.55rem 黑体;color: #fff;text-align: center;background: #ff1f43;float: right;}
+.login .loginbtn{width: 6.3rem;height: .8rem;margin: .6rem auto .68rem;background: #ff1f43;font: .28rem/.8rem 黑体;color: #fff;text-align: center;border-radius: .08rem;}
+.login .elselogintitle{width: 6.3rem;height: .28rem;margin: 0rem auto .7rem;}
+.login .elselogintitle .line{width: 1.96rem;height: .02rem;background: #999;float: left;margin-top: .13rem;}
+.login .elselogintitle .text{width: 2.38rem;height: 28rem;font: .28rem/.28rem 黑体;color: #666;text-align: center;float: left;}
+.login .elselogin{width: 3.8rem;height: 1rem;margin: 0rem auto;position: relative;}
+.login .elselogin .elseloginlogo{width: 1rem;height: 1rem;background-repeat:no-repeat ;background-size:100% 100%;position: absolute;top: 0rem;}
+.login .elselogin .elseloginlogo1{background-image:url(../img/qq.png) ;left: 0rem;}
+.login .elselogin .elseloginlogo2{background-image:url(../img/wx.png) ;right: 0rem;}
+/*个人信息*/
+.mineinfo{width: 7.1rem;padding-left:.2rem;padding-right:.2rem;overflow: hidden;margin: 0rem auto;border-top:.4rem solid #F4F5F7;border-bottom:.4rem solid #F4F5F7;background: #fff;}
+.mineinfo .headimg{width: 100%;height: 1.56rem;border-bottom:.02rem solid #F4F5F7;font:.3rem/1.56rem 黑体;position: relative;background: url(../img/to.png) right center no-repeat;background-size:.24rem .24rem ;}
+.mineinfo .name{width: 100%;height: 1rem;border-bottom:.02rem solid #F4F5F7;font:.3rem/1rem 黑体;position: relative;background: url(../img/to.png) right center no-repeat;background-size:.24rem .24rem ;}
+.mineinfo .img{width: 1.2rem;height: 1.2rem;border-radius: .08rem;position: absolute;top: .2rem;right: .4rem;}
+.mineinfo .name_text{float:left;color:#999;position: absolute;top: 0rem;right: .4rem;}
+.mineinfo .img img{width: 100%;height: 100%;}
+.quit{width: 100%;height: 1rem;font: .3rem/1rem 黑体;color: #333;text-align: center;}
+.editname{display:none;width: 100%;height: 100%;position: fixed;top: 0rem;left: 0rem;background: rgba(0,0,0,0.6);}
+.editbox{width: 7.06rem;height: .72rem;padding:.14rem .22rem;background: #fff;position: absolute;bottom: 0rem;left: 0rem;}
+.editbox .editinput{width: 5.54rem;height: .7rem;border: .01rem solid #999;border-radius: .08rem;float: left;overflow: hidden;}
+.editbox .editinput input{width: 100%;height: 100%;outline: none;border:none;padding-left: .18rem;font: .28rem/.7rem 黑体;color: #999;}
+.editbox .true{width: 1.28rem;height: 100%;background: #E53232;border-radius: .08rem;float: right;font: .22rem/.7rem 黑体;color: #fff;text-align: center;}
+/*我的故事集*/
+.storyarr{width: 7.1rem;overflow: hidden;margin: 0rem auto;}
+.storyarr .storyarrlist{width: 100%;overflow: hidden;padding-top:.1rem;}
+.storyarr .storyarrlist_img{width: 1.2rem;height: 1.2rem;float: left;}
+.storyarr .storyarrlist_img img{width: 100%;height: 100%;}
+.storyarr .storyarrcon{width: 5.7rem;overflow: hidden;float: right;position: relative;}
+.storyarr .storyarrcon .conbox{width: 4.4rem;overflow: hidden;}
+.storyarr .storyarrcon .title{width: 100%;height: .58rem;font: .28rem/.58rem 黑体;color: #333;}
+.storyarr .storyarrcon .arrlength{width: 100%;height: .65rem;font: .28rem 黑体;color: #666;border-bottom: .02rem solid #F4F5F7;padding-bottom:.1rem;}
+.storyarr .storyarrlist:last-child .arrlength{border: none;}
+.storyarr .storyarrcon .edit{width: .44rem;height: .44rem;background: url(../img/edit.png) no-repeat;background-size:100% 100% ;position: absolute;top: .35rem;right: .74rem;}
+.storyarr .storyarrcon .del{width: .44rem;height: .44rem;background: url(../img/delthing.png) no-repeat;background-size:100% 100% ;position: absolute;top: .35rem;right: 0rem;}
+.addoreditbox{display:none;width: 100%;height: 100%;background: rgba(0,0,0,0.5);position: fixed;top: 0rem;left: 0rem;}
+.addoreditbox .addoredit{width: 100%;height: 3.8rem;background: #fff;position: absolute;bottom: 0rem;left: 0rem;}
+.addoreditbox .addoredit .title{width: 100%;height: .96rem;font: .32rem/.96rem 黑体;color: #333;text-align: center;}
+.addoreditbox .addoredit .storyinput{width: 7rem;height: .72rem;margin: 0rem auto .38rem;background: #efefef;border-radius: .36rem;overflow: hidden;}
+.addoreditbox .addoredit .storyinput input{width: 100%;height: 100%;padding-left: .2rem;background: #EFEFEF;font: .28rem/.72rem 黑体;color: #333;outline: none;border: none;}
+.addoreditbox .addoredit .dir{width: 7rem;margin:0rem auto .1rem;overflow: hidden;font: .22rem/.32rem 黑体;color: #999;}
+.addoreditbox .addoredit .save{width: 100%;height: .98rem;box-shadow: 0rem -.05rem .2rem 0rem #f1f1f1;font: .3rem/.98rem 黑体;color: #FF1F43;text-align: center;}
+.addstoryarr{width: 6.9rem;height: 1rem;margin: .2rem auto;background: #1aac19;font: .36rem/1rem 黑体;color: #fff;text-align: center;border-radius: .08rem;}
+/*充值*/
+.recharge{width: 100%;height: 100%;position: fixed;top: 0rem;left: 0rem;background: #fff;}
+.recharge .recharge_img{width: 2.14rem;height: 2.14rem;margin: .56rem auto .28rem;background: url(../img/rechargelogo.png) no-repeat;background-size: 100% 100%;}
+.recharge .title{width: 100%;height: .86rem;font: .36rem 黑体;color: #333;text-align: center;}
+.recharge .recharge_money{width: 2.32rem;height: 1.8rem;padding-left: .68rem;margin: 0rem auto;font: .8rem 黑体;color: #333;background: url(../img/recharge_money.png) 0rem .2rem no-repeat;background-size:.48rem .6rem ;}
+.recharge .recharge_btn{width: 6.9rem;height: 1rem;margin: 0rem auto .2rem;background: #1aac19;font: .36rem/1rem 黑体;color: #fff;text-align: center;border-radius: .08rem;}
+.recharge_mask{display:none;width: 100%;height: 100%;background: rgba(0,0,0,0.6);position: absolute;top: 0rem;left: 0rem;}
+.recharge_mask .recharge_way{width: 100%;height: 8.58rem;position: absolute;bottom: 0rem;left: 0re;background: #F4F5F7;}
+.recharge_mask .way_title{width: 100%;height: .9rem;background:#fff;font:bold .36rem/.9rem 黑体;color: #333;text-align: center;border-bottom: .02rem solid #F4F5F7;}
+.recharge_mask .waybox{width: 6.94;margin:0rem auto;padding-left: .28rem;padding-right: .28rem;background: #fff;}
+.recharge_mask .waybox li{width: 5.48rem;padding-left: 1.46rem;height: 1.1rem;font:bold .32rem/1.1rem 黑体;border-bottom: .02rem solid #F4F5F7;position: relative;}
+.recharge_mask .waybox .select{width: .38rem;height: .38rem;background: url(../img/rselect.png) no-repeat;background-size:.38rem .38rem ;position: absolute;top: .36rem;left: 0rem;}
+.recharge_mask .waybox .selected{background-image:url(../img/rsleected.png) ;}
+.recharge_mask .waybox .rzfb{background: url(../img/rzfb.png) .68rem .33rem no-repeat;background-size:.48rem .48rem ;}
+.recharge_mask .waybox .rwx{background: url(../img/rwx.png) .68rem .33rem no-repeat;background-size:.48rem .48rem ;}
+.recharge_mask .waybox .ryh{background: url(../img/ryh.png) .68rem .33rem no-repeat;background-size:.48rem .48rem ;}
+.recharge_mask .torecharge{width: 6.9rem;height: 1rem;font: .32rem/1rem 黑体;color: #fff;text-align: center;background: #1AAC19;border-radius:.08rem;position: absolute;bottom: .2rem;left: .3rem;}
+/*vip*/
+.changevip{width: 7.1rem;padding-left:.2rem;padding-right:.2rem;margin:0px auto;height: 100%;background: #fff;position: fixed;top: 0px;left: 0px;}
+.changeviplist{width: 100%;overflow: hidden;}
+.changevip li{width: 6.46rem;padding-left:.64rem;height: 1rem;font: .3rem/1rem 黑体;color: #333;border-bottom: .01rem solid #f4f5f7;background-repeat:no-repeat ;background-position:0px center;background-size:.44rem .44rem ;position: relative;}
+.changevip .vipjin{background-image:url(../img/vipjin.png) ;}
+.changevip .vipyin{background-image:url(../img/vipyin.png) ;}
+.changevip .viptong{background-image:url(../img/viptong.png) ;}
+.changevip span{position: absolute;top: 0;right:0;bottom:0;margin: auto auto;}
+.changevip .tuijian{width: .56rem;height: .3rem;background: url(../img/tuijian.png) no-repeat;background-size:100% 100% ;position: absolute;top: 0;bottom: 0;left: 2.5rem;margin: auto auto;}
+.changebtn{width: 6.9rem;margin:1.6rem auto 0rem;height: 1rem;border-radius: .06rem;background: #ff1f43;font: .36rem/1rem 黑体;color: #fff;text-align: center;}
+/*充值记录*/
+.rHlist{width: 7.1rem;height: .8rem;padding-top: .4rem;padding-bottom: .4rem;margin: 0rem auto;border-bottom: .02rem solid #F4F5F7;position: relative;}
+.rHlist:last-child{border: none;}
+.rHlist .title{width: 100%;height: .3rem;font: bold .3rem/.3rem 黑体;color: #333;margin-bottom: .3rem;}
+.rHlist .time{width: 100%;height: .22rem;font: .22rem/.22rem 黑体;color: #666;}
+.rHlist .rMoney{width: auto;height: auto;font: bold .36rem 黑体;color: #FF1F43;position: absolute;top: .6rem;right: 0rem;}
+/*alert和conform弹框*/
+.alertbox{display:none;z-index:100;width: 100%;height: 100%;position: fixed;top: 0rem;left: 0rem;background: rgba(0,0,0,0.6);}
+.alertbox .alert{width: 5.6rem;height: 3.5rem;border-radius: .08rem;background: #fff;position: absolute;top:0;left: 0;right: 0;bottom: 0;margin: auto auto;}
+.alertbox .alert .con{width: 5.2rem;height: 1.5rem;margin:0rem auto;padding:.4rem 0rem;font: .3rem/1.5rem 黑体;color: #333;text-align: center;border-bottom: .01rem solid #E5E5E5;}
+.alertbox .alert .alertbtn{width: 100%;height: .74rem;padding-top:.24rem;padding-bottom:.24rem;}
+.alertbox .alert .alertbtn .alerttrue{width: 2.5rem;height: 100%;margin: 0rem auto;border-radius:.1rem;background: #E53232;font: .3rem/.74rem 黑体;color: #fff;text-align: center;}
+.confirmbox{display:none;z-index:100;width: 100%;height: 100%;position: fixed;top: 0rem;left: 0rem;background: rgba(0,0,0,0.6);}
+.confirmbox .confirm{width: 5.6rem;height: 3.5rem;border-radius: .08rem;background: #fff;position: absolute;top:0;left: 0;right: 0;bottom: 0;margin: auto auto;}
+.confirmbox .confirm .con{width: 5.2rem;height: 1.5rem;margin:0rem auto;padding:.4rem 0rem;font: .3rem/1.5rem 黑体;color: #333;text-align: center;border-bottom: .01rem solid #E5E5E5;}
+.confirmbox .confirm .confirmbtn{width: 5.2rem;margin:0rem auto;height: .74rem;padding-top:.24rem;padding-bottom:.24rem;}
+.confirmbox .confirm .confirmbtn .confirmfalse{width: 2.48rem;height: .73;margin: 0rem auto;border-radius:.1rem;background: #fff;font: .3rem/.74rem 黑体;color: #333;text-align: center;float: left;border:.01rem solid #333 ;}
+.confirmbox .confirm .confirmbtn .confirmtrue{width: 2.5rem;height: 100%;margin: 0rem auto;border-radius:.1rem;background: #E53232;font: .3rem/.74rem 黑体;color: #fff;text-align: center;float: right;}
+/*关闭弹框*/
+.closemask{width: 100%;}
+/*全屏loadding*/
+.allloadding{display:none;width: 100%;height: 100%;position: fixed;top:0px;left: 0px;background-color: rgba(0,0,0,0.05);background-image: url(../img/loadding.gif);background-repeat: no-repeat;background-position: center center;background-size: 2rem 2rem;}
+.uploadding{display:none;width: 100%;height: .98rem;background: url(../img/scrollloadding.gif) center center no-repeat;background-size:.84rem .47rem;position: fixed;bottom: 0rem;left: 0rem;}
+/*404或报错界面*/
+.nohtmlbox{width: 100%;height: 100%;position: fixed;top: 0px;left: 0px;overflow: hidden;background: #f4f5f7;}
+.nohtml{width: 3.6rem;height:5.98rem;position: absolute;top:0;left:0;right:0;bottom:0;margin:auto auto;}
+.nohtml .nohtmllogo{width:3.6rem;height:3.6rem;background: url(../img/404.png) no-repeat;background-size:3.6rem 3.6rem ;}
+.nohtml .nohtmltitle{width:100%;height:1.08rem;font: .6rem/1.08rem 黑体;color: #333;text-align: center;}
+.nohtml .nohtmltext{width:100%;height:.3rem;font: .26rem/.3rem 黑体;color: #333;text-align: center;margin-bottom: 1rem;}
+.nohtml .reload{width:100%;height:.3rem;font: .3rem/.3rem 黑体;color: #666;text-align: center;}
+/*无数据*/
+.noshujubox{display:none;z-index:999;width: 100%;height: 100%;position: fixed;top: 0px;left: 0px;overflow: hidden;background: #f4f5f7;}
+.noshuju{width:4rem;height:4.6rem;position: absolute;top:0;left:0;bottom:0;right:0;margin: auto auto;}
+.noshuju .noshujulogo{width: 4rem;height: 4rem;background: url(../img/noshuju.png) no-repeat;background-size:4rem 4rem ;margin-bottom: .3rem;}
+.noshuju .noshujutext{width:100%;height:.3rem;font: .3rem/.3rem 黑体;color: #333;text-align: center;}

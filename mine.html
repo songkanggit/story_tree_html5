@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>故事树</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- No Baidu Siteapp-->
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- Add to homescreen for Chrome on Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<!-- Add to homescreen for Safari on iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+
+	<body>
+		<div class="stapp">
+			<div class="mine">
+				<div class="mine_head">
+					<div class="minehead">
+						<div class="minehead_img" onclick="tomineinfo();">
+							<img src="" alt="" />
+						</div>
+						<div class="VIP"></div>
+						<div class="loginbtn">
+							<div class="btn" onclick="tologin(1);">登录</div>
+							<div class="btn" onclick="tologin(2);">注册</div>
+						</div>
+						<div class="myphone">15932119504</div>
+					</div>
+					<div class="mine_caozuo">
+						<div class="caozuobox" onclick="tomylist(1)">
+							<div class="caozuo_logo caozuo_logo1"></div>
+							<div class="caozuo_text">我的收藏</div>
+						</div>
+						<div class="caozuobox" onclick="tomylist(2)">
+							<div class="caozuo_logo caozuo_logo2"></div>
+							<div class="caozuo_text">我的下载</div>
+						</div>
+						<div class="caozuobox" onclick="tomylist(3)">
+							<div class="caozuo_logo caozuo_logo3"></div>
+							<div class="caozuo_text">我的购买</div>
+						</div>
+					</div>
+				</div>
+				<ul class="minelist">
+					<li onclick="tostoryarr();">
+						<div class="logo logo1"></div>
+						<div class="listname">我的故事集</div>
+						<div class="to"></div>
+					</li>
+					<li onclick="torecharge();">
+						<div class="logo logo2"></div>
+						<div class="listname">我的钱包</div>
+						<div class="to"></div>
+					</li>
+					<li onclick="tochangevip();">
+						<div class="logo logo3"></div>
+						<div class="listname">加入会员</div>
+						<div class="to"></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script>
+		//		判断登录状态
+		judelogin(function() {
+				$(".minehead_img img").attr("src", 'img/nologinheadimg.png');
+				$(".minehead_img img").attr("alt", '没有登录头像');
+				$(".VIP").css("background-image","url(img/vip1.png)");
+				$(".loginbtn").show();
+				$(".myphone").hide();
+			}, function() {
+				$(".minehead_img img").attr("src", 'img/loginhead.png');
+				$(".minehead_img img").attr("alt", '登录头像');
+				$(".VIP").css("background-image","url(img/vip2.png)");
+				$(".loginbtn").hide();
+				$(".myphone").show();
+			})
+			//		跳转我的收藏，我的下载，我的购买
+		function tomylist(mytype) {
+			judelogin(function() {
+				showalert("请先登录您的账号");
+			}, function() {
+				if(mytype == 3){
+					showalert("此功能尚未开通");
+				}else{
+					rount('mine', 'mylist', function() {
+						window.localStorage.setItem("mytype", mytype);
+					});
+				}
+			})
+		}
+		//		跳转我的详情
+		function tomineinfo() {
+			judelogin(function() {
+				showalert("请先登录您的账号");
+			}, function() {
+				rount('mine', 'mineinfo', function() {});
+			})
+		}
+		//		跳转故事集
+		function tostoryarr() {
+			judelogin(function() {
+				showalert("请先登录您的账号");
+			}, function() {
+				rount('mine', 'storyarr', function() {
+					window.localStorage.setItem("st", "load");
+				});
+			})
+		}
+		function tochangevip() {
+			judelogin(function() {
+				showalert("请先登录您的账号");
+			}, function() {
+				rount('mine', 'changevip', function() {});
+			})
+		}
+		//		跳转登录
+		function tologin(logintype) {
+			rount('mine', 'login', function() {
+				window.localStorage.setItem("logintype",logintype);
+			});
+		}
+		//		跳转交易
+		function torecharge() {
+			judelogin(function() {
+				showalert("请先登录您的账号");
+			}, function() {
+				rount('mine', 'recharge', function() {});
+			})
+		}
+		scrollpage('false');
+	</script>
+
+</html>

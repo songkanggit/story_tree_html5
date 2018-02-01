@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>故事树</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- No Baidu Siteapp-->
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- Add to homescreen for Chrome on Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<!-- Add to homescreen for Safari on iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+
+	<body>
+		<div class="stapp">
+			<div class="sreach">
+				<div class="sreachinput">
+					<div class="sreachlogo"></div>
+					<input type="text" name="" value="" placeholder="搜索" id="sreachinput" />
+				</div>
+				<div class="sreachtext" onclick="tosreachsong()">搜索</div>
+			</div>
+			<div class="sreachtitle sreachlogo1">推荐搜索</div>
+			<ul class="sreachlist">
+				<li onclick="sreachkey(this)" id="sreachinput1">小猫的故事</li>
+				<li onclick="sreachkey(this)" id="sreachinput2">卡梅拉</li>
+				<li onclick="sreachkey(this)" id="sreachinput3">小羊的故事</li>
+				<li onclick="sreachkey(this)" id="sreachinput4">睡前故事</li>
+				<li onclick="sreachkey(this)" id="sreachinput5">杨梅姐姐</li>
+				<li onclick="sreachkey(this)" id="sreachinput6">讲故事</li>
+			</ul>
+			<div class="sreachtitle sreachlogo2">分类列表</div>
+			<ul class="sreachlist" id="sreach2">
+			</ul>
+			<div class="sreachtitle sreachlogo3">专辑列表</div>
+			<ul class="sreachlist" id="sreach3">
+			</ul>
+		</div>
+	</body>
+	<script>
+		//		跳转搜索详情
+		function tosreachsong() {
+			window.localStorage.setItem("sreachinput", $("#sreachinput").val());
+			window.localStorage.setItem("sreachinput1", $("#sreachinput1").text());
+			window.localStorage.setItem("sreachinput2", $("#sreachinput2").text());
+			window.localStorage.setItem("sreachinput3", $("#sreachinput3").text());
+			window.localStorage.setItem("sreachinput4", $("#sreachinput4").text());
+			window.localStorage.setItem("sreachinput5", $("#sreachinput5").text());
+			if ($("#sreachinput").val() == "") {
+				showalert("请输入搜索条件");
+				return;
+			}
+			rount('sreach', 'classifyinfo', function() {
+				window.localStorage.setItem("cty", "2");
+				window.localStorage.setItem('keyword', $("#sreachinput").val())
+			});
+		}
+		//		初始化搜索历史
+		function writesreachsong() {
+			if (window.localStorage.getItem('sreachinput') == "" || window.localStorage.getItem('sreachinput') == null) {
+				$("#sreachinput1").html("小猫的故事");
+				$("#sreachinput2").html("卡梅拉");
+				$("#sreachinput3").html("小羊的故事");
+				$("#sreachinput4").html("睡前故事");
+				$("#sreachinput5").html("杨梅姐姐");
+				$("#sreachinput6").html("学知识");
+			} else {
+				$("#sreachinput1").html(window.localStorage.getItem("sreachinput"));
+				$("#sreachinput2").html(window.localStorage.getItem("sreachinput1"));
+				$("#sreachinput3").html(window.localStorage.getItem("sreachinput2"));
+				$("#sreachinput4").html(window.localStorage.getItem("sreachinput3"));
+				$("#sreachinput5").html(window.localStorage.getItem("sreachinput4"));
+				$("#sreachinput6").html(window.localStorage.getItem("sreachinput5"));
+			}
+		}
+		//		选择搜索条件
+		function sreachkey(t) {
+			if ($(t).hasClass("select") == false) {
+				$(".stapp li").removeClass("select");
+				$(t).addClass("selected");
+				$("#sreachinput").val($(t).text());
+				window.localStorage.setItem('sreachinput', $("#sreachinput").val());
+			} else {
+				$(".stapp li").removeClass("select");
+				$("#sreachinput").val("");
+				window.localStorage.setItem('sreachinput', "");
+			}
+			tosreachsong();
+		}
+		//		初始化数据
+		function defaultdata() {
+			$("#sreach2").empty();
+			$("#sreach3").empty();
+			$(".allloadding").show();
+			$.ajax({
+				type: 'POST',
+				url: url + 'melody/queryList.do',
+				dataType: 'json',
+				success: function(data) {
+					for (var i = 0; i < data.data.categoryList.length; i++) {
+						$("#sreach2").append("<li onclick='sreachkey(this)'>" + data.data.categoryList[i] + "</li>")
+					}
+					for (var i = 0; i < 10; i++) {
+						$("#sreach3").append("<li onclick='sreachkey(this)'>" + data.data.albumList[i] + "</li>")
+					}
+					$(".allloadding").hide();
+				},
+				error: function(xhr, error, ex) {
+					if (xhr.status == '404') {
+						window.location.href = "nohtml.html";
+					}
+					if (xhr.status == '500') {
+						window.location.href = "nohtml.html";
+					}
+				}
+			});
+		}
+		defaultdata();
+		writesreachsong();
+		scrollpage('false');
+	</script>
+
+</html>

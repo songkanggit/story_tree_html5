@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>故事树</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- No Baidu Siteapp-->
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- Add to homescreen for Chrome on Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<!-- Add to homescreen for Safari on iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+
+	<body>
+		<div class="stapp">
+			<input type="hidden" name="" value="" id="allpage" />
+			<div class="storyarr" id="storyarr">
+			</div>
+			<div class="addstoryarr" onclick="showaddoreditbox('',2)">新建故事集</div>
+			<div class="addoreditbox">
+				<div class="closemask" onclick="closemask('addoreditbox')"></div>
+				<div class="addoredit">
+					<div class="title"></div>
+					<div class="storyinput"><input type="" name="" id="storyinput" value="" placeholder="请输入故事集名称" /></div>
+					<div class="dir">提示：故事集是用户自己创建的故事列表，您可以把喜欢的故事添加到故事集中，并为其命名。</div>
+					<div class="save" onclick="">保存</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script>
+		var arr = [];
+		var page = 1;
+		//		添加到故事集
+		function addtostoryarr(id) {
+			$(".allloadding").show();
+			var magarr = window.localStorage.getItem("magarr").split(",");
+			$.ajax({
+				type: 'POST',
+				url: url + 'app/accountStoryCollectionList/addList.do',
+				data: {
+					collectionId: id,
+					idList: magarr,
+					accountId: window.localStorage.getItem("accountId"),
+					accountIdTelePhone: window.localStorage.getItem("accountIdTelePhone")
+				},
+				dataType: 'json',
+				success: function(data) {
+					$(".allloadding").hide();
+					if (data.state == true) {
+						$("#storyarr").empty();
+						page = 1;
+						defaultdata();
+					} else {
+						showalert("数据错误，请重试");
+					}
+				},
+				error: function(xhr, error, ex) {
+					if (xhr.status == '404') {
+						window.location.href = "nohtml.html";
+					}
+					if (xhr.status == '500') {
+						window.location.href = "nohtml.html";
+					}
+				}
+			});
+		}
+		//		展示编辑故事集添加故事集
+		function showaddoreditbox(id, ty) {
+			if (ty == 1) {
+				$.ajax({
+					type: 'POST',
+					url: url + 'app/accountStoryCollection/query.do',
+					data: {
+						id: id
+					},
+					dataType: 'json',
+					success: function(data) {
+						$(".addoredit .title").text("编辑故事集");
+						$(".addoreditbox").attr("name", id);
+						$("#storyinput").val(data.data.collectionName);
+						$(".addoreditbox").fadeIn(200);
+						$(".addoreditbox .save").attr("onclick", "writestory()");
+					},
+					error: function(xhr, error, ex) {
+						if (xhr.status == '404') {
+							window.location.href = "nohtml.html";
+						}
+						if (xhr.status == '500') {
+							window.location.href = "nohtml.html";
+						}
+					}
+				})
+			} else if (ty == 2) {
+				$(".addoredit .title").text("新建故事集");
+				$(".addoreditbox").attr("name", id);
+				$("#storyinput").val('');
+				$(".addoreditbox").fadeIn(200);
+				$(".addoreditbox .save").attr("onclick", "creatstory()");
+			}
+		}
+		//		添加故事集
+		function creatstory() {
+			if ($("#storyinput").val() == "") {
+				showalert("请填写故事集名称");
+			} else {
+				$(".allloadding").show();
+				$.ajax({
+					type: 'POST',
+					url: url + 'app/accountStoryCollection/add.do',
+					data: {
+						accountId: window.localStorage.getItem("accountId"),
+						accountIdTelePhone: window.localStorage.getItem("accountIdTelePhone"),
+						collectionName: $("#storyinput").val()
+					},
+					dataType: 'json',
+					success: function(data) {
+						$(".allloadding").hide();
+						if (data.state == true) {
+							page = 1;
+							$("#storyarr").empty();
+							closemask('addoreditbox');
+							defaultdata();
+						} else {
+							showalert("数据错误，请重试");
+						}
+					},
+					error: function(xhr, error, ex) {
+						if (xhr.status == '404') {
+							window.location.href = "nohtml.html";
+						}
+						if (xhr.status == '500') {
+							window.location.href = "nohtml.html";
+						}
+					}
+				})
+			}
+		}
+		//		编辑故事集
+		function writestory() {
+			$(".allloadding").show();
+			$.ajax({
+				type: 'POST',
+				url: url + 'app/accountStoryCollection/update.do',
+				data: {
+					id: $(".addoreditbox").attr("name"),
+					accountId: window.localStorage.getItem("accountId"),
+					accountIdTelePhone: window.localStorage.getItem("accountIdTelePhone"),
+					collectionName: $("#storyinput").val()
+				},
+				dataType: 'json',
+				success: function(data) {
+					$(".allloadding").hide();
+					if (data.state == true) {
+						$("#storyarr").empty();
+						page = 1;
+						closemask('addoreditbox');
+						defaultdata();
+					} else {
+						showalert("数据错误，请重试");
+					}
+				},
+				error: function(xhr, error, ex) {
+					if (xhr.status == '404') {
+						window.location.href = "nohtml.html";
+					}
+					if (xhr.status == '500') {
+						window.location.href = "nohtml.html";
+					}
+				}
+			})
+		}
+		//		删除故事集
+		function truefunc() {
+			$(".allloadding").show();
+			$.ajax({
+				type: 'POST',
+				url: url + 'app/accountStoryCollection/delete.do',
+				data: {
+					idList: arr
+				},
+				dataType: 'json',
+				success: function(data) {
+					window.console.log(data);
+					$(".allloadding").hide();
+					if (data.state == true) {
+						arr = [];
+						$("#storyarr").empty();
+						page = 1;
+						closemask('addoreditbox');
+						defaultdata();
+					} else {
+						showalert("数据错误，请重试");
+					}
+				},
+				error: function(xhr, error, ex) {
+					if (xhr.status == '404') {
+						window.location.href = "nohtml.html";
+					}
+					if (xhr.status == '500') {
+						window.location.href = "nohtml.html";
+					}
+				}
+			})
+		}
+		//		初始化数据
+		function defaultdata(loadding) {
+			if(loadding == 1){
+				$(".allloadding").show();
+			}else if(loadding == 2){
+				$(".uploadding").show();
+			}
+			if (window.localStorage.getItem("st") == "addto") {
+				$(".noshujubox").hide();
+				checkAIEnter("back", window.localStorage.getItem("keyword"), "", 1);
+				$.ajax({
+					type: 'POST',
+					url: url + 'app/accountStoryCollection/queryList.do',
+					data: {
+						page: page,
+						accountId: window.localStorage.getItem("accountId"),
+					},
+					dataType: 'json',
+					success: function(data) {
+						if(data.data.length == 0){
+							$(".noshujubox").show();
+						}else{
+							for (var i = 0; i < data.data.length; i++) {
+								$("#storyarr").append("<div class='storyarrlist'><div class='storyarrlist_img' onclick='addtostoryarr(" + data.data[i].id + ")'><img src='img/rebouimg.png' alt='img/loginlogo.png' /></div><div class='storyarrcon'><div class='conbox' onclick='addtostoryarr(" + data.data[i].id + ")'><div class='title'>" + data.data[i].collectionName + "</div><div class='arrlength'>共" + data.data[i].melodyCount + "首</div></div><div class='edit' onclick='showaddoreditbox(" + data.data[i].id + ",1)'></div><div class='del' onclick='del(" + data.data[i].id + ")'></div></div></div>");
+							}
+						}
+						$("#allpage").val(data.pageSize);
+						$(".allloadding").hide();
+						$(".uploadding").hide();
+					},
+					error: function(xhr, error, ex) {
+						if (xhr.status == '404') {
+							window.location.href = "nohtml.html";
+						}
+						if (xhr.status == '500') {
+							window.location.href = "nohtml.html";
+						}
+					}
+				});
+			} else if (window.localStorage.getItem("st") == "load") {
+				$(".noshujubox").hide();
+				checkAIEnter("back", window.localStorage.getItem("keyword"), "", 1);
+				$.ajax({
+					type: 'POST',
+					url: url + 'app/accountStoryCollection/queryList.do',
+					data: {
+						page: page,
+						accountId: window.localStorage.getItem("accountId"),
+					},
+					dataType: 'json',
+					success: function(data) {
+						if(data.data.length == 0){
+							$(".noshujubox").show();
+						}else{
+							for (var i = 0; i < data.data.length; i++) {
+								$("#storyarr").append("<div class='storyarrlist'><div class='storyarrlist_img' onclick='tomystory(" + data.data[i].id + ")'><img src='img/rebouimg.png' alt='img/loginlogo.png' /></div><div class='storyarrcon'><div class='conbox' onclick='tomystory(" + data.data[i].id + ")'><div class='title'>" + data.data[i].collectionName + "</div><div class='arrlength'>共" + data.data[i].melodyCount + "首</div></div><div class='edit' onclick='showaddoreditbox(" + data.data[i].id + ",1)'></div><div class='del' onclick='del(" + data.data[i].id + ")'></div></div></div>");
+							}
+						}
+						$("#allpage").val(data.pageSize);
+						$(".allloadding").hide();
+					},
+					error: function(xhr, error, ex) {
+						if (xhr.status == '404') {
+							window.location.href = "nohtml.html";
+						}
+						if (xhr.status == '500') {
+							window.location.href = "nohtml.html";
+						}
+					}
+				});
+			}
+		}
+
+		function tomystory(id) {
+			rount('storyarr', 'classifyinfo', function() {
+				window.localStorage.setItem("cty", "2");
+				window.localStorage.setItem("keyword", id)
+			});
+		}
+		defaultdata();
+		loadclosemaskheight();
+		scrollpage('true');
+	</script>
+
+</html>

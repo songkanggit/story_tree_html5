@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>故事树</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- No Baidu Siteapp-->
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- Add to homescreen for Chrome on Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<!-- Add to homescreen for Safari on iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+
+	<body>
+		<div class="stapp">
+			<input type="hidden" name="" value="" id="allpage" />
+			<div class="topbox">
+				<div class="top">
+					<div class="allplayer allpayerlogo" onclick="allplayer(this,'listbox')">全部播放</div>
+				</div>
+			</div>
+			<ul class="listbox" id="listbox">
+			</ul>
+		</div>
+	</body>
+	<script>
+		var arr = [];
+		var page = 1;
+		//		删除下载中歌曲
+		function truefunc() {
+			$(".allloadding").show();
+			$.ajax({
+				type: 'POST',
+				url: url + 'app/accountStoryCollection/delete.do',
+				data: {
+					idList: arr
+				},
+				dataType: 'json',
+				success: function(data) {
+					$(".allloadding").hide();
+					if (data.state == true) {
+						arr = [];
+						$("#storyarr").empty();
+						page = 1;
+						closemask('addoreditbox');
+						defaultdata();
+					} else {
+						showalert("数据错误，请重试");
+					}
+				},
+				error: function(xhr, error, ex) {
+					if (xhr.status == '404') {
+						window.location.href = "nohtml.html";
+					}
+					if (xhr.status == '500') {
+						window.location.href = "nohtml.html";
+					}
+				}
+			})
+		}
+
+		function defaultdata(loadding) {
+			if(loadding == 1){
+				$(".allloadding").show();
+			}else if(loadding == 2){
+				$(".uploadding").show();
+			}
+			if (window.localStorage.getItem("mytype") == '1') {
+				$(".noshujubox").hide();
+				checkAIEnter("back", "我的收藏", "", 1);
+				$.ajax({
+					type: 'POST',
+					url: url + 'app/favoriteMelody/queryList.do',
+					data: {
+						page: page,
+						accountId: window.localStorage.getItem("accountId")
+					},
+					dataType: 'json',
+					success: function(data) {
+						if(data.data.length == 0){
+							$(".noshujubox").show();
+						}else{
+							for (var i = 0; i < data.data.length; i++) {
+								var mUrl = url+data.data[i].melodyFilePath;
+								var mCoverImageUrl = url+data.data[i].melodyCoverImage;
+								var mTitle = data.data[i].melodyName;
+								var mAlbum = data.data[i].melodyAlbum;
+								var mArtist = data.data[i].melodyArtist;
+								$("#listbox").append("<li data-murl='"+mUrl+"' data-mcoverimageurl='"+mCoverImageUrl+"' data-mtitle='"+mTitle+"' data-malbum='"+mAlbum+"' data-martist='"+mArtist+"' id='song" + data.data[i].id + "'><div class='listimg'><img src='" + url + data.data[i].melodyCoverImage + "' alt='" + url + data.data[i].melodyCoverImage + "' /></div><div class='listcon'><div class='conbox' onclick='oneplayer(" + data.data[i].id + ")'><p class='contitle'>" + data.data[i].melodyName + "</p><p class='condir'>" + data.data[i].melodyArtist + "·" + data.data[i].melodyAlbum + "</p></div><div class='collection' onclick='showCollect(this," + data.data[i].id + ")'></div></li>")
+								if (data.data[i].favorated == true) {
+									$("#" + data.data[i].id + " .collection").addClass("collectioned");
+								}
+							}
+						}
+						$("#allpage").val(data.pageSize);
+						$(".allloadding").hide();
+						$(".uploadding").hide();
+					},
+					error: function(xhr, error, ex) {
+						if (xhr.status == '404') {
+							window.location.href = "nohtml.html";
+						}
+						if (xhr.status == '500') {
+							window.location.href = "nohtml.html";
+						}
+					}
+				});
+			} else if (window.localStorage.getItem("mytype") == '2') {
+				$(".noshujubox").hide();
+				checkAIEnter("back", "我的下载", "", 1);
+				$.ajax({
+					type: 'POST',
+					url: url + 'app/favoriteMelody/queryList.do',
+					data: {
+						page: page,
+						accountId: window.localStorage.getItem("accountId")
+					},
+					dataType: 'json',
+					success: function(data) {
+						if(data.data.length == 0){
+							$(".noshujubox").show();
+						}else{
+							for (var i = 0; i < data.data.length; i++) {
+								var mUrl = url+data.data[i].melodyFilePath;
+								var mCoverImageUrl = url+data.data[i].melodyCoverImage;
+								var mTitle = data.data[i].melodyName;
+								var mAlbum = data.data[i].melodyAlbum;
+								var mArtist = data.data[i].melodyArtist;
+								$("#listbox").append("<li data-murl='"+mUrl+"' data-mcoverimageurl='"+mCoverImageUrl+"' data-mtitle='"+mTitle+"' data-malbum='"+mAlbum+"' data-martist='"+mArtist+"' id='song" + data.data[i].id + "'><div class='listimg'><img src='" + url + data.data[i].melodyCoverImage + "' alt='" + url + data.data[i].melodyCoverImage + "' /></div><div class='listcon'><div class='conbox' onclick='oneplayer(" + data.data[i].id + ")'><p class='contitle'>" + data.data[i].melodyName + "</p><p class='condir'>" + data.data[i].melodyArtist + "·" + data.data[i].melodyAlbum + "</p></div><div class='del' onclick='del(" + data.data[i].id + ")'></div></li>")
+							}
+						}
+						$("#allpage").val(data.pageSize);
+						$(".allloadding").hide();
+						$(".uploadding").hide();
+					},
+					error: function(xhr, error, ex) {
+						if (xhr.status == '404') {
+							window.location.href = "nohtml.html";
+						}
+						if (xhr.status == '500') {
+							window.location.href = "nohtml.html";
+						}
+					}
+				});
+			} else if (window.localStorage.getItem("mytype") == '3') {
+				checkAIEnter("back", "我的购买", "", 1);
+			}
+		}
+		defaultdata();
+		scrollpage('true');
+	</script>
+
+</html>
