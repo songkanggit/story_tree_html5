@@ -45,8 +45,7 @@
 		</form>
 	</body>
 	<script>
-		checkAIEnter("back", "个人中心", "", 1);
-
+		checkAIEnter("个人中心", window.localStorage.getItem("historyhtml"), 1);
 		function showchange(t, et) {
 			$(".editname input").val($(t).find(".name_text").text())
 			$(".editname").show();

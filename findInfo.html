@@ -30,7 +30,7 @@
 		</div>
 	</body>
 	<script>
-		checkAIEnter("back", window.localStorage.getItem("findtitle"), "", 1);
+		checkAIEnter(window.localStorage.getItem("findtitle"), window.localStorage.getItem("historyhtml"), 1);
 		//		新增浏览量
 		function addPageView() {
 			$.ajax({

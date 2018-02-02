@@ -217,7 +217,7 @@
 			}
 			if (window.localStorage.getItem("st") == "addto") {
 				$(".noshujubox").hide();
-				checkAIEnter("back", window.localStorage.getItem("keyword"), "", 1);
+				checkAIEnter(window.localStorage.getItem("keyword"), window.localStorage.getItem("historyhtml"), 3);
 				$.ajax({
 					type: 'POST',
 					url: url + 'app/accountStoryCollection/queryList.do',
@@ -249,7 +249,7 @@
 				});
 			} else if (window.localStorage.getItem("st") == "load") {
 				$(".noshujubox").hide();
-				checkAIEnter("back", window.localStorage.getItem("keyword"), "", 1);
+				checkAIEnter(window.localStorage.getItem("keyword"), window.localStorage.getItem("historyhtml"), 1);
 				$.ajax({
 					type: 'POST',
 					url: url + 'app/accountStoryCollection/queryList.do',
@@ -263,7 +263,7 @@
 							$(".noshujubox").show();
 						}else{
 							for (var i = 0; i < data.data.length; i++) {
-								$("#storyarr").append("<div class='storyarrlist'><div class='storyarrlist_img' onclick='tomystory(" + data.data[i].id + ")'><img src='img/rebouimg.png' alt='img/loginlogo.png' /></div><div class='storyarrcon'><div class='conbox' onclick='tomystory(" + data.data[i].id + ")'><div class='title'>" + data.data[i].collectionName + "</div><div class='arrlength'>共" + data.data[i].melodyCount + "首</div></div><div class='edit' onclick='showaddoreditbox(" + data.data[i].id + ",1)'></div><div class='del' onclick='del(" + data.data[i].id + ")'></div></div></div>");
+								$("#storyarr").append("<div class='storyarrlist' id='story"+data.data[i].id+"'><div class='storyarrlist_img' onclick='tomystory(" + data.data[i].id + ")'><img src='img/rebouimg.png' alt='img/loginlogo.png' /></div><div class='storyarrcon'><div class='conbox' onclick='tomystory(" + data.data[i].id + ")'><div class='title'>" + data.data[i].collectionName + "</div><div class='arrlength'>共" + data.data[i].melodyCount + "首</div></div><div class='edit' onclick='showaddoreditbox(" + data.data[i].id + ",1)'></div><div class='del' onclick='del(" + data.data[i].id + ")'></div></div></div>");
 							}
 						}
 						$("#allpage").val(data.pageSize);
@@ -284,7 +284,8 @@
 		function tomystory(id) {
 			rount('storyarr', 'classifyinfo', function() {
 				window.localStorage.setItem("cty", "2");
-				window.localStorage.setItem("keyword", id)
+				window.localStorage.setItem("storyid", id)
+				window.localStorage.setItem("keyword", $("#story"+id).find(".title").text());
 			});
 		}
 		defaultdata();

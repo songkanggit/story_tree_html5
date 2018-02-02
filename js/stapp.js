@@ -260,17 +260,18 @@ function getLocalTime(nS) {
 	return new Date(parseInt(nS)).toLocaleString().replace(/年月|下午|上午/g, "").replace(/日/g, "").replace("/", "-").replace("/", "-");
 }
 //判断客户端进入页面
-function checkAIEnter(back, conText, shareUrl, layerDepth) {
+function checkAIEnter(title, historyhtml, layerDepth) {
 	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { 
 		//判断iPhone|iPad|iPod|iOS
-		alert(conText);
+//		alert(title);
 //		iPhone.enterPlayView(back, conText, shareUrl, layerDepth);
 	} else if (/(Android)/i.test(navigator.userAgent)) { 
 		//判断Android
-		alert(conText);
-//		Android.enterPlayView(back, conText, shareUrl, layerDepth);
+//		alert(title);
+		var paras = {title:title,url:historyhtml,layerDepth:layerDepth};
+		Android.loadWebPage(paras);
 	} else { //pc
-		alert(conText)
+		alert(title)
 	};
 }
 //全部播放
@@ -289,12 +290,13 @@ function allplayer(t,idbox) {
 function oneplayer(id) {
 	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { //判断iPhone|iPad|iPod|iOS
 	} else if (/(Android)/i.test(navigator.userAgent)) { //判断Android
-		Android.playMusic(JSON.stringify({
+		var paras = {
 			mUrl: $("#song" + id).attr("data-murl"),
 			mCoverImageUrl: $("#song" + id).attr("data-mcoverimageurl"),
 			mTitle: $("#song" + id).attr("data-mtitle"),
 			mAlbum: $("#song" + id).attr("data-malbum"),
 			mArtist: $("#song" + id).attr("data-martist")
-		}));
+		};
+		Android.playMusic(paras);
 	}
 }

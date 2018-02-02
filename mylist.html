@@ -72,7 +72,7 @@
 			}
 			if (window.localStorage.getItem("mytype") == '1') {
 				$(".noshujubox").hide();
-				checkAIEnter("back", "我的收藏", "", 1);
+				checkAIEnter("我的收藏", window.localStorage.getItem("historyhtml"), 1);
 				$.ajax({
 					type: 'POST',
 					url: url + 'app/favoriteMelody/queryList.do',
@@ -112,7 +112,7 @@
 				});
 			} else if (window.localStorage.getItem("mytype") == '2') {
 				$(".noshujubox").hide();
-				checkAIEnter("back", "我的下载", "", 1);
+				checkAIEnter("我的下载", window.localStorage.getItem("historyhtml"), 1);
 				$.ajax({
 					type: 'POST',
 					url: url + 'app/favoriteMelody/queryList.do',
@@ -148,7 +148,7 @@
 					}
 				});
 			} else if (window.localStorage.getItem("mytype") == '3') {
-				checkAIEnter("back", "我的购买", "", 1);
+				checkAIEnter("我的购买", window.localStorage.getItem("historyhtml"), 1);
 			}
 		}
 		defaultdata();
