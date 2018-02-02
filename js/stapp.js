@@ -269,7 +269,7 @@ function checkAIEnter(title, historyhtml, layerDepth) {
 		//判断Android
 //		alert(title);
 		var paras = {title:title,url:historyhtml,layerDepth:layerDepth};
-		Android.loadWebPage(paras);
+		Android.loadWebPage(JSON.stringify(paras));
 	} else { //pc
 		alert(title)
 	};
@@ -297,6 +297,6 @@ function oneplayer(id) {
 			mAlbum: $("#song" + id).attr("data-malbum"),
 			mArtist: $("#song" + id).attr("data-martist")
 		};
-		Android.playMusic(paras);
+		Android.playMusic(JSON.stringify(paras));
 	}
 }

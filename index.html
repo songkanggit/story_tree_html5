@@ -21,8 +21,8 @@
 			<!--轮播图-->
 			<div class="banner">
 				<div class="swiper-container">
-					<div class="swiper-wrapper">
-						<div class="swiper-slide">
+					<div class="swiper-wrapper" id="banner">
+						<!--<div class="swiper-slide">
 							<a><img src="img/1.jpg" alt="img/1.jpg" id="25" datasrc="img/1.jpg" data="杨梅，橙子，蓝莓，西瓜" name="/MelodyCache/0bb6c61a711d4f4aa570d4124731058c.mp3" title="咕咚来了" /></a>
 						</div>
 						<div class="swiper-slide">
@@ -30,7 +30,7 @@
 						</div>
 						<div class="swiper-slide">
 							<a><img src="img/3.jpg" alt="img/3.jpg" id="55" datasrc="img/3.jpg" data="杨梅，西柚，榴莲" name="/MelodyCache/8a17a1ed9ab444e7b96dc5994096c61a.mp3" title="长颈鹿与小山羊" /></a>
-						</div>
+						</div>-->
 					</div>
 					<!-- 分页器 -->
 					<div class="swiper-pagination"></div>
@@ -66,8 +66,8 @@
 	</body>
 	<script>
 		$(function() {
-				banner();
 				defaultdata();
+				loadbanner();
 			})
 			//轮播图方法
 		function banner() {
@@ -96,6 +96,31 @@
 						$("#rebou").append("<li name='" + data.data[i].albumName + "' title='" + data.data[i].albumCoverImage + "' onclick='toablumorsreach(this,1)'><div class='rebou_img'><img src='" + url + data.data[i].albumCoverImage + "' alt='" + url + data.data[i].albumCoverImage + "' /></div><div class='rebou_text'>" + data.data[i].albumName + "</div></li>")
 					}
 					$(".allloadding").hide();
+				},
+				error: function(xhr, error, ex) {
+					defaultdata();
+				}
+			});
+		}
+		//		banner图片初始化
+		function loadbanner() {
+			$(".allloadding").show();
+			$.ajax({
+				type: 'POST',
+				url: url + 'melody/queryList.do',
+				dataType: 'json',
+				success: function(data) {
+					console.log(data)
+					for (var i = 0; i < 4; i++) {
+						var mUrl = url+data.data.melodyList[i].melodyFilePath;
+						var mCoverImageUrl = url+data.data.melodyList[i].melodyCoverImage;
+						var mTitle = data.data.melodyList[i].melodyName;
+						var mAlbum = data.data.melodyList[i].melodyAlbum;
+						var mArtist = data.data.melodyList[i].melodyArtist;
+						$("#banner").append("<div class='swiper-slide' data-murl='"+mUrl+"' data-mcoverimageurl='"+mCoverImageUrl+"' data-mtitle='"+mTitle+"' data-malbum='"+mAlbum+"' data-martist='"+mArtist+"' id='song" + data.data.melodyList[i].id + "' onclick='oneplayer("+data.data.melodyList[i].id+")'><a><img src='"+url+data.data.melodyList[i].melodyCoverImage+"' alt='"+url+data.data.melodyList[i].melodyCoverImage+"' /></a></div>");
+					}
+					$(".allloadding").hide();
+					banner();
 				},
 				error: function(xhr, error, ex) {
 					defaultdata();

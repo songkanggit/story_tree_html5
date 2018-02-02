@@ -6,7 +6,7 @@ body,html{background:#f4f5f7;}
 /*轮播图*/
 .banner {width: 100%;height: 3.2rem;overflow: hidden;position: relative;}
 .banner a{display: block;width: 100%;height: 100%;}
-.banner img{width: 100%;height: 100%;}
+.banner img{width: 100%;}
 .banner .swiper-container{width: 100%;height: 100%;}
 .banner .swiper-pagination-bullet{background: #fff;opacity: 6;}
 .banner .swiper-pagination-bullet-active{background: #e53232;}
