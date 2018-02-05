@@ -45,7 +45,8 @@
 		</form>
 	</body>
 	<script>
-		checkAIEnter("个人中心", window.localStorage.getItem("historyhtml"), 1);
+		$(".noshujubox").hide();
+		checkAIEnter("个人中心", oldhtmlarr[oldhtmlarr.length - 1], 1);
 		function showchange(t, et) {
 			$(".editname input").val($(t).find(".name_text").text())
 			$(".editname").show();

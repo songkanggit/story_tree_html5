@@ -39,7 +39,7 @@
 		</div>
 	</body>
 	<script>
-		checkAIEnter(window.localStorage.getItem("keyword"), window.localStorage.getItem("historyhtml"), 2);
+		checkAIEnter(window.localStorage.getItem("keyword"), oldhtmlarr[oldhtmlarr.length - 1], 2);
 		var magarr = [];
 		var page = 1;
 		//		跳转故事集
@@ -62,6 +62,7 @@
 		function defaultdata(loadding) {
 			if(loadding == 1){
 				$(".allloadding").show();
+				$(".noshujubox").hide();
 			}else if(loadding == 2){
 				$(".uploadding").show();
 			}

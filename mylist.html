@@ -21,7 +21,7 @@
 			<input type="hidden" name="" value="" id="allpage" />
 			<div class="topbox">
 				<div class="top">
-					<div class="allplayer allpayerlogo" onclick="allplayer(this,'listbox')">全部播放</div>
+					<div class="allplayer allpayerlogo" onclick="allplayer('listbox')">全部播放</div>
 				</div>
 			</div>
 			<ul class="listbox" id="listbox">
@@ -67,12 +67,13 @@
 		function defaultdata(loadding) {
 			if(loadding == 1){
 				$(".allloadding").show();
+				$(".noshujubox").hide();
 			}else if(loadding == 2){
 				$(".uploadding").show();
 			}
 			if (window.localStorage.getItem("mytype") == '1') {
 				$(".noshujubox").hide();
-				checkAIEnter("我的收藏", window.localStorage.getItem("historyhtml"), 1);
+				checkAIEnter("我的收藏", oldhtmlarr[oldhtmlarr.length - 1], 1);
 				$.ajax({
 					type: 'POST',
 					url: url + 'app/favoriteMelody/queryList.do',
@@ -91,7 +92,8 @@
 								var mTitle = data.data[i].melodyName;
 								var mAlbum = data.data[i].melodyAlbum;
 								var mArtist = data.data[i].melodyArtist;
-								$("#listbox").append("<li data-murl='"+mUrl+"' data-mcoverimageurl='"+mCoverImageUrl+"' data-mtitle='"+mTitle+"' data-malbum='"+mAlbum+"' data-martist='"+mArtist+"' id='song" + data.data[i].id + "'><div class='listimg'><img src='" + url + data.data[i].melodyCoverImage + "' alt='" + url + data.data[i].melodyCoverImage + "' /></div><div class='listcon'><div class='conbox' onclick='oneplayer(" + data.data[i].id + ")'><p class='contitle'>" + data.data[i].melodyName + "</p><p class='condir'>" + data.data[i].melodyArtist + "·" + data.data[i].melodyAlbum + "</p></div><div class='collection' onclick='showCollect(this," + data.data[i].id + ")'></div></li>")
+								var mfavorite = data.data[i].favorated;
+								$("#listbox").append("<li data-mfavorite='"+mfavorite+"' data-murl='"+mUrl+"' data-mcoverimageurl='"+mCoverImageUrl+"' data-mtitle='"+mTitle+"' data-malbum='"+mAlbum+"' data-martist='"+mArtist+"' id='song" + data.data[i].id + "'><div class='listimg'><img src='" + url + data.data[i].melodyCoverImage + "' alt='" + url + data.data[i].melodyCoverImage + "' /></div><div class='listcon'><div class='conbox' onclick='oneplayer(" + data.data[i].id + ")'><p class='contitle'>" + data.data[i].melodyName + "</p><p class='condir'>" + data.data[i].melodyArtist + "·" + data.data[i].melodyAlbum + "</p></div><div class='collection' onclick='showCollect(this," + data.data[i].id + ")'></div></li>")
 								if (data.data[i].favorated == true) {
 									$("#" + data.data[i].id + " .collection").addClass("collectioned");
 								}
@@ -112,7 +114,7 @@
 				});
 			} else if (window.localStorage.getItem("mytype") == '2') {
 				$(".noshujubox").hide();
-				checkAIEnter("我的下载", window.localStorage.getItem("historyhtml"), 1);
+				checkAIEnter("我的下载", oldhtmlarr[oldhtmlarr.length - 1], 1);
 				$.ajax({
 					type: 'POST',
 					url: url + 'app/favoriteMelody/queryList.do',
@@ -125,13 +127,15 @@
 						if(data.data.length == 0){
 							$(".noshujubox").show();
 						}else{
+							console.log(data)
 							for (var i = 0; i < data.data.length; i++) {
 								var mUrl = url+data.data[i].melodyFilePath;
 								var mCoverImageUrl = url+data.data[i].melodyCoverImage;
 								var mTitle = data.data[i].melodyName;
 								var mAlbum = data.data[i].melodyAlbum;
 								var mArtist = data.data[i].melodyArtist;
-								$("#listbox").append("<li data-murl='"+mUrl+"' data-mcoverimageurl='"+mCoverImageUrl+"' data-mtitle='"+mTitle+"' data-malbum='"+mAlbum+"' data-martist='"+mArtist+"' id='song" + data.data[i].id + "'><div class='listimg'><img src='" + url + data.data[i].melodyCoverImage + "' alt='" + url + data.data[i].melodyCoverImage + "' /></div><div class='listcon'><div class='conbox' onclick='oneplayer(" + data.data[i].id + ")'><p class='contitle'>" + data.data[i].melodyName + "</p><p class='condir'>" + data.data[i].melodyArtist + "·" + data.data[i].melodyAlbum + "</p></div><div class='del' onclick='del(" + data.data[i].id + ")'></div></li>")
+								var mfavorite = data.data[i].favorated;
+								$("#listbox").append("<li data-mfavorite='"+mfavorite+"' data-murl='"+mUrl+"' data-mcoverimageurl='"+mCoverImageUrl+"' data-mtitle='"+mTitle+"' data-malbum='"+mAlbum+"' data-martist='"+mArtist+"' id='song" + data.data[i].id + "'><div class='listimg'><img src='" + url + data.data[i].melodyCoverImage + "' alt='" + url + data.data[i].melodyCoverImage + "' /></div><div class='listcon'><div class='conbox' onclick='oneplayer(" + data.data[i].id + ")'><p class='contitle'>" + data.data[i].melodyName + "</p><p class='condir'>" + data.data[i].melodyArtist + "·" + data.data[i].melodyAlbum + "</p></div><div class='del' onclick='del(" + data.data[i].id + ")'></div></li>")
 							}
 						}
 						$("#allpage").val(data.pageSize);
@@ -148,7 +152,7 @@
 					}
 				});
 			} else if (window.localStorage.getItem("mytype") == '3') {
-				checkAIEnter("我的购买", window.localStorage.getItem("historyhtml"), 1);
+				checkAIEnter("我的购买", oldhtmlarr[oldhtmlarr.length - 1], 1);
 			}
 		}
 		defaultdata();

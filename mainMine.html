@@ -56,8 +56,8 @@
 		loadmine();
 			//返回
 		window.loadHistoryPage = function() {
-				$("#mainbox").load(window.localStorage.getItem("historyhtml"));
-			}
+			$("#mainbox").load(oldhtmlarr.pop());
+		}
 	</script>
 
 </html>

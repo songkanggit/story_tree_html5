@@ -86,8 +86,10 @@ function loadsreach() {
 
 }
 //路由
+var oldhtmlarr = [];
 function rount(oldhtml, newhtml, callback) {
-	window.localStorage.setItem("historyhtml", oldhtml + ".html")
+	oldhtmlarr.push(oldhtml+".html");
+//	console.log(oldhtmlarr)
 	$("#mainbox").load(newhtml + ".html");
 	callback();
 }
@@ -253,7 +255,6 @@ function quit() {
 	window.localStorage.setItem("accountIdTelePhone", "");
 	window.localStorage.setItem("magarr", "");
 	$("#mainbox").load("mine.html");
-	checkAIEnter("scan", "我的", "option");
 }
 //转换时间
 function getLocalTime(nS) {
@@ -264,7 +265,8 @@ function checkAIEnter(title, historyhtml, layerDepth) {
 	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { 
 		//判断iPhone|iPad|iPod|iOS
 //		alert(title);
-//		iPhone.enterPlayView(back, conText, shareUrl, layerDepth);
+		var paras = {title:title,url:historyhtml,layerDepth:layerDepth};
+		IOS.loadWebPage(JSON.stringify(paras));
 	} else if (/(Android)/i.test(navigator.userAgent)) { 
 		//判断Android
 //		alert(title);
@@ -275,28 +277,46 @@ function checkAIEnter(title, historyhtml, layerDepth) {
 	};
 }
 //全部播放
-function allplayer(t,idbox) {
-	if($(t).hasClass("allpauselogo") == true){
-		$(t).removeClass("allpauselogo");
-	}else{
-		$(t).addClass("allpauselogo");
-		var allplayer = [];
-		for (var i = 0; i < $("#" + idbox + " li").length; i++) {
-			allplayer.push($("#" + idbox + " li").eq(i).attr("id").substring(4));
+function allplayer(idbox) {
+	var allplayer = [];
+	for (var i = 0; i < $("#" + idbox + " li").length; i++) {
+		var paras = {
+			mUrl: $("#" + idbox + " li").eq(i).attr("data-murl"),
+			mCoverImageUrl: $("#" + idbox + " li").eq(i).attr("data-mcoverimageurl"),
+			mTitle: $("#" + idbox + " li").eq(i).attr("data-mtitle"),
+			mAlbum: $("#" + idbox + " li").eq(i).attr("data-malbum"),
+			mArtist: $("#" + idbox + " li").eq(i).attr("data-martist"),
+			mFavorite:$("#" + idbox + " li").eq(i).attr("data-mfavorite")
 		}
+		allplayer.push(paras);
+	}
+	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { //判断iPhone|iPad|iPod|iOS
+		IOS.playMusic(allplayer);
+	} else if (/(Android)/i.test(navigator.userAgent)) { //判断Android
+		Android.playMusic(allplayer);
 	}
 }
 //单个播放
 function oneplayer(id) {
 	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { //判断iPhone|iPad|iPod|iOS
-	} else if (/(Android)/i.test(navigator.userAgent)) { //判断Android
-		var paras = {
+		var paras = [{
 			mUrl: $("#song" + id).attr("data-murl"),
 			mCoverImageUrl: $("#song" + id).attr("data-mcoverimageurl"),
 			mTitle: $("#song" + id).attr("data-mtitle"),
 			mAlbum: $("#song" + id).attr("data-malbum"),
-			mArtist: $("#song" + id).attr("data-martist")
-		};
-		Android.playMusic(JSON.stringify(paras));
+			mArtist: $("#song" + id).attr("data-martist"),
+			mFavorite:$("#song" + id).attr("data-mfavorite")
+		}];
+		IOS.playMusic(paras);
+	} else if (/(Android)/i.test(navigator.userAgent)) { //判断Android
+		var paras = [{
+			mUrl: $("#song" + id).attr("data-murl"),
+			mCoverImageUrl: $("#song" + id).attr("data-mcoverimageurl"),
+			mTitle: $("#song" + id).attr("data-mtitle"),
+			mAlbum: $("#song" + id).attr("data-malbum"),
+			mArtist: $("#song" + id).attr("data-martist"),
+			mFavorite:$("#song" + id).attr("data-mfavorite")
+		}];
+		Android.playMusic(paras);
 	}
 }

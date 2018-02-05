@@ -47,7 +47,8 @@
 		</div>
 	</body>
 	<script>
-		checkAIEnter("我的钱包", window.localStorage.getItem("historyhtml"), 1);
+		$(".noshujubox").hide();
+		checkAIEnter("我的钱包", oldhtmlarr[oldhtmlarr.length - 1], 1);
 		//		切换充值方式
 		var payway = '微信';
 		//		跳转支付记录

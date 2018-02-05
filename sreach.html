@@ -43,6 +43,8 @@
 		</div>
 	</body>
 	<script>
+//		oldhtmlarr.push("index.html");
+		checkAIEnter('搜索', '', 0);
 		//		跳转搜索详情
 		function tosreachsong() {
 			window.localStorage.setItem("sreachinput", $("#sreachinput").val());
@@ -56,7 +58,7 @@
 				return;
 			}
 			rount('sreach', 'classifyinfo', function() {
-				window.localStorage.setItem("cty", "2");
+//				window.localStorage.setItem("cty", "2");
 				window.localStorage.setItem('keyword', $("#sreachinput").val())
 			});
 		}
@@ -94,6 +96,7 @@
 		}
 		//		初始化数据
 		function defaultdata() {
+			$(".noshujubox").hide();
 			$("#sreach2").empty();
 			$("#sreach3").empty();
 			$(".allloadding").show();

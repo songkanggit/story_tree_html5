@@ -65,8 +65,10 @@
 		</div>
 	</body>
 	<script>
+		var page = 1;
 		$(function() {
-				defaultdata();
+				checkAIEnter("首页","", 0);
+				defaultdata(1);
 				loadbanner();
 			})
 			//轮播图方法
@@ -84,8 +86,13 @@
 			})
 		}
 		//		首页初始化
-		function defaultdata() {
-			$(".allloadding").show();
+		function defaultdata(loadding) {
+			if(loadding == 1){
+				$(".allloadding").show();
+				$(".noshujubox").hide();
+			}else if(loadding == 2){
+				$(".uploadding").show();
+			}
 			$("#rebou").empty();
 			$.ajax({
 				type: 'POST',
@@ -110,7 +117,6 @@
 				url: url + 'melody/queryList.do',
 				dataType: 'json',
 				success: function(data) {
-					console.log(data)
 					for (var i = 0; i < 4; i++) {
 						var mUrl = url+data.data.melodyList[i].melodyFilePath;
 						var mCoverImageUrl = url+data.data.melodyList[i].melodyCoverImage;

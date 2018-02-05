@@ -19,46 +19,17 @@
 	<body>
 		<div class="stapp" id="rhistory">
 			<input type="hidden" name="" value="" id="allpage" />
-			<div class="rHlist">
-				<div class="title">微信充值</div>
-				<div class="time">2017-12-07 19:44:25</div>
-				<div class="rMoney">+100.00</div>
-			</div>
-			<div class="rHlist">
-				<div class="title">微信充值</div>
-				<div class="time">2017-12-07 19:44:25</div>
-				<div class="rMoney">+100.00</div>
-			</div>
-			<div class="rHlist">
-				<div class="title">微信充值</div>
-				<div class="time">2017-12-07 19:44:25</div>
-				<div class="rMoney">+100.00</div>
-			</div>
-			<div class="rHlist">
-				<div class="title">微信充值</div>
-				<div class="time">2017-12-07 19:44:25</div>
-				<div class="rMoney">+100.00</div>
-			</div>
-			<div class="rHlist">
-				<div class="title">微信充值</div>
-				<div class="time">2017-12-07 19:44:25</div>
-				<div class="rMoney">+100.00</div>
-			</div>
-			<div class="rHlist">
-				<div class="title">微信充值</div>
-				<div class="time">2017-12-07 19:44:25</div>
-				<div class="rMoney">+100.00</div>
-			</div>
 		</div>
 	</body>
 	<script>
-		checkAIEnter("交易记录", window.localStorage.getItem("historyhtml"), 2);
+		checkAIEnter("交易记录", oldhtmlarr[oldhtmlarr.length - 1], 2);
 		var page = 1;
 		scrollpage('true');
 
 		function defaultdata(loadding) {
 			if (loadding == 1) {
 				$(".allloadding").show();
+				$(".noshujubox").hide();
 			} else if (loadding == 2) {
 				$(".uploadding").show();
 			}

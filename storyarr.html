@@ -212,12 +212,12 @@
 		function defaultdata(loadding) {
 			if(loadding == 1){
 				$(".allloadding").show();
+				$(".noshujubox").hide();
 			}else if(loadding == 2){
 				$(".uploadding").show();
 			}
 			if (window.localStorage.getItem("st") == "addto") {
-				$(".noshujubox").hide();
-				checkAIEnter(window.localStorage.getItem("keyword"), window.localStorage.getItem("historyhtml"), 3);
+				checkAIEnter(window.localStorage.getItem("keyword"), oldhtmlarr[oldhtmlarr.length - 1], 3);
 				$.ajax({
 					type: 'POST',
 					url: url + 'app/accountStoryCollection/queryList.do',
@@ -248,8 +248,7 @@
 					}
 				});
 			} else if (window.localStorage.getItem("st") == "load") {
-				$(".noshujubox").hide();
-				checkAIEnter(window.localStorage.getItem("keyword"), window.localStorage.getItem("historyhtml"), 1);
+				checkAIEnter(window.localStorage.getItem("keyword"), oldhtmlarr[oldhtmlarr.length - 1], 1);
 				$.ajax({
 					type: 'POST',
 					url: url + 'app/accountStoryCollection/queryList.do',

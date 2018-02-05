@@ -69,12 +69,14 @@
 	<script>
 		//		判断登录状态
 		judelogin(function() {
+				checkAIEnter("我的","", 0);
 				$(".minehead_img img").attr("src", 'img/nologinheadimg.png');
 				$(".minehead_img img").attr("alt", '没有登录头像');
 				$(".VIP").css("background-image","url(img/vip1.png)");
 				$(".loginbtn").show();
 				$(".myphone").hide();
 			}, function() {
+				checkAIEnter("我的","", 0);
 				$(".minehead_img img").attr("src", 'img/loginhead.png');
 				$(".minehead_img img").attr("alt", '登录头像');
 				$(".VIP").css("background-image","url(img/vip2.png)");

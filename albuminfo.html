@@ -30,7 +30,7 @@
 			</div>
 			<div class="topbox">
 				<div class="top">
-					<div class="allplayer allpayerlogo" onclick="allplayer(this,'listbox')">全部播放</div>
+					<div class="allplayer allpayerlogo" onclick="allplayer('listbox')">全部播放</div>
 					<div class="mag maglogo" onclick="rount('albuminfo','mag',kong)">管理</div>
 				</div>
 			</div>
@@ -39,12 +39,13 @@
 		</div>
 	</body>
 	<script>
-		checkAIEnter(window.localStorage.getItem("keyword"),window.localStorage.getItem("historyhtml"), 1);
+		checkAIEnter(window.localStorage.getItem("keyword"),oldhtmlarr[oldhtmlarr.length - 1], 1);
 		var page = 1;
 		//		专辑曲目初始化
 		function defaultdata(loadding) {
 			if(loadding == 1){
 				$(".allloadding").show();
+				$(".noshujubox").hide();
 			}else if(loadding == 2){
 				$(".uploadding").show();
 			}
@@ -66,7 +67,8 @@
 						var mTitle = data.data.melodyList[i].melodyName;
 						var mAlbum = data.data.melodyList[i].melodyAlbum;
 						var mArtist = data.data.melodyList[i].melodyArtist;
-						$("#listbox").append("<li data-murl='"+mUrl+"' data-mcoverimageurl='"+mCoverImageUrl+"' data-mtitle='"+mTitle+"' data-malbum='"+mAlbum+"' data-martist='"+mArtist+"' id='song" + data.data.melodyList[i].id + "'><div class='listimg'><img src='" + url + data.data.melodyList[i].melodyCoverImage + "' alt='" + url + data.data.melodyList[i].melodyCoverImage + "' /></div><div class='listcon'><div class='conbox' onclick='oneplayer("+data.data.melodyList[i].id+")'><p class='contitle'>" + data.data.melodyList[i].melodyName + "</p><p class='condir'>" + data.data.melodyList[i].melodyArtist + "·" + data.data.melodyList[i].melodyAlbum + "</p></div><div class='collection' onclick='showCollect(this," + data.data.melodyList[i].id + ")'></div></li>")
+						var mfavorite = data.data.melodyList[i].favorated;
+						$("#listbox").append("<li data-mfavorite='"+mfavorite+"' data-murl='"+mUrl+"' data-mcoverimageurl='"+mCoverImageUrl+"' data-mtitle='"+mTitle+"' data-malbum='"+mAlbum+"' data-martist='"+mArtist+"' id='song" + data.data.melodyList[i].id + "'><div class='listimg'><img src='" + url + data.data.melodyList[i].melodyCoverImage + "' alt='" + url + data.data.melodyList[i].melodyCoverImage + "' /></div><div class='listcon'><div class='conbox' onclick='oneplayer("+data.data.melodyList[i].id+")'><p class='contitle'>" + data.data.melodyList[i].melodyName + "</p><p class='condir'>" + data.data.melodyList[i].melodyArtist + "·" + data.data.melodyList[i].melodyAlbum + "</p></div><div class='collection' onclick='showCollect(this," + data.data.melodyList[i].id + ")'></div></li>")
 						if (data.data.melodyList[i].favorated == true) {
 							$("#" + data.data.melodyList[i].id + " .collection").addClass("collectioned");
 						}
