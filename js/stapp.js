@@ -306,6 +306,7 @@ function judetelphone(Icallback, Acallback, Pcallback) {
 		Pcallback();
 	};
 }
+
 //判断客户端进入页面
 function checkAIEnter(title, historyhtml, layerDepth) {
 	judetelphone(function() {
