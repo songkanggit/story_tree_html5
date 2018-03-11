@@ -21,17 +21,20 @@
 			<!--轮播图-->
 			<div class="banner">
 				<div class="swiper-container">
-					<div class="swiper-wrapper" id="banner">
-						<!--<div class="swiper-slide">
-							<a><img src="img/1.jpg" alt="img/1.jpg" id="25" datasrc="img/1.jpg" data="杨梅，橙子，蓝莓，西瓜" name="/MelodyCache/0bb6c61a711d4f4aa570d4124731058c.mp3" title="咕咚来了" /></a>
-						</div>
-						<div class="swiper-slide">
-							<a><img src="img/2.jpg" alt="img/2.jpg" id="22" datasrc="img/2.jpg" data="杨梅" name="/MelodyCache/dca4830dbfd247f184c134d4b206e641.mp3" title="雪地里的脚印" /></a>
-						</div>
-						<div class="swiper-slide">
-							<a><img src="img/3.jpg" alt="img/3.jpg" id="55" datasrc="img/3.jpg" data="杨梅，西柚，榴莲" name="/MelodyCache/8a17a1ed9ab444e7b96dc5994096c61a.mp3" title="长颈鹿与小山羊" /></a>
-						</div>-->
-					</div>
+					<ul class="swiper-wrapper" id="banner">
+						<li class="swiper-slide" onclick="bannerplayer('289')">
+							<a><img src="img/banner1.png" alt="img/banner1.png" /></a>
+						</li>
+						<li class="swiper-slide" onclick="bannerplayer('297')">
+							<a><img src="img/banner2.png" alt="img/banner2.png" /></a>
+						</li>
+						<li class="swiper-slide" onclick="bannerplayer('296')">
+							<a><img src="img/banner3.png" alt="img/banner3.png" /></a>
+						</li>
+						<li class="swiper-slide" onclick="bannerplayer('295')">
+							<a><img src="img/banner4.png" alt="img/banner4.png" /></a>
+						</li>
+					</ul>
 					<!-- 分页器 -->
 					<div class="swiper-pagination"></div>
 				</div>
@@ -58,19 +61,37 @@
 					<div class="classifytext">分类</div>
 				</li>
 			</ul>
-			<div class="reboutitle">精品推荐</div>
-			<ul class="rebou" id="rebou">
-				<div class="localloadding"></div>
+			<div class="reboutitle">
+				<div class="albumtitle">果果精选专辑</div>
+				<div class="albumDir">耳朵竖起来，心灵养起来</div>
+				<div class="getmore" name="果果精选专辑" onclick="toablumorsreach(this,4)">更多</div>
+			</div>
+			<ul class="rebou" id="rebouAlbum">
 			</ul>
+			<div class="changedatabox" id="changeAlbum">
+				<div class="changedata">换一批</div>
+			</div>
+			<div class="reboutitle margin24">
+				<div class="albumtitle">果果单曲分享</div>
+				<div class="albumDir">大千世界，等宝贝来听</div>
+				<div class="getmore" name="果果单曲分享" onclick="toablumorsreach(this,3	)">更多</div>
+			</div>
+			<ul class="rebousong" id="listbox">
+			</ul>
+			<div class="changedatabox" id="changeSong">
+				<div class="changedata">换一批</div>
+			</div>
 		</div>
 	</body>
 	<script>
-		var page = 1;
 		$(function() {
-				checkAIEnter("首页","", 0);
-				defaultdata(1);
-				loadbanner();
+				checkAIEnter("故事树", "", 0);
+				defaultablumdata();
+				defaultsongdata();
+				banner();
 			})
+		var albumList = [];
+		var songList = [];
 			//轮播图方法
 		function banner() {
 			var mySwiper = new Swiper('.swiper-container', {
@@ -85,48 +106,61 @@
 				paginationClickable: true,
 			})
 		}
-		//		首页初始化
-		function defaultdata(loadding) {
-			if(loadding == 1){
-				$(".allloadding").show();
-				$(".noshujubox").hide();
-			}else if(loadding == 2){
-				$(".uploadding").show();
-			}
-			$("#rebou").empty();
+		//		首页精品专辑初始化
+		function defaultablumdata() {
+			var idList = [28,36,37,39,40,41,42,43,47,49,51,52,53,56,58,59,29,30,32,33];
+			$(".allloadding").show();
+			$(".noshujubox").hide();
+			$("#rebouAlbum").empty();
 			$.ajax({
 				type: 'POST',
-				url: url + 'album/queryList.do',
+				url: url + 'album/queryValueList.do',
+				data: {
+					idList: idList
+				},
 				dataType: 'json',
 				success: function(data) {
-					for (var i = 0; i < data.data.length; i++) {
-						$("#rebou").append("<li name='" + data.data[i].albumName + "' title='" + data.data[i].albumCoverImage + "' onclick='toablumorsreach(this,1)'><div class='rebou_img'><img src='" + url + data.data[i].albumCoverImage + "' alt='" + url + data.data[i].albumCoverImage + "' /></div><div class='rebou_text'>" + data.data[i].albumName + "</div></li>")
+					albumList = data.data;
+					albumList = getRandomArrayElements(albumList,6);
+					for (var i = 0; i < albumList.length; i++) {
+						$("#rebouAlbum").append("<li name='" + albumList[i].albumName + "' title='" + albumList[i].albumCoverImage + "' onclick='toablumorsreach(this,1)'><div class='rebou_img'><img src='" + url + albumList[i].albumCoverImage + "' alt='" + url + albumList[i].albumCoverImage + "' /></div><div class='rebou_text'>" + albumList[i].albumName + "</div></li>")
 					}
 					$(".allloadding").hide();
+					$("#changeAlbum").attr("onclick","changedata(defaultablumdata)");
 				},
 				error: function(xhr, error, ex) {
 					defaultdata();
 				}
 			});
 		}
-		//		banner图片初始化
-		function loadbanner() {
+		//		首页精品曲目初始化
+		function defaultsongdata() {
+			var idList = [479,489,491,490,184,155,185,194,150,159,232,431,428,427,426,425,421,420,418,151];
 			$(".allloadding").show();
+			$(".noshujubox").hide();
+			$("#listbox").empty();
 			$.ajax({
 				type: 'POST',
-				url: url + 'melody/queryList.do',
+				url: url + 'melody/queryValueList.do',
+				data: {
+					idList: idList
+				},
 				dataType: 'json',
 				success: function(data) {
-					for (var i = 0; i < 4; i++) {
-						var mUrl = url+data.data.melodyList[i].melodyFilePath;
-						var mCoverImageUrl = url+data.data.melodyList[i].melodyCoverImage;
-						var mTitle = data.data.melodyList[i].melodyName;
-						var mAlbum = data.data.melodyList[i].melodyAlbum;
-						var mArtist = data.data.melodyList[i].melodyArtist;
-						$("#banner").append("<div class='swiper-slide' data-murl='"+mUrl+"' data-mcoverimageurl='"+mCoverImageUrl+"' data-mtitle='"+mTitle+"' data-malbum='"+mAlbum+"' data-martist='"+mArtist+"' id='song" + data.data.melodyList[i].id + "' onclick='oneplayer("+data.data.melodyList[i].id+")'><a><img src='"+url+data.data.melodyList[i].melodyCoverImage+"' alt='"+url+data.data.melodyList[i].melodyCoverImage+"' /></a></div>");
+					songList = data.data;
+					songList = getRandomArrayElements(songList,4);
+					for (var i = 0; i < songList.length; i++) {
+						var mId = songList[i].id;
+						var mUrl = url+songList[i].melodyFilePath;
+						var mCoverImageUrl = url+songList[i].melodyCoverImage;
+						var mTitle = songList[i].melodyName;
+						var mAlbum = songList[i].melodyAlbum;
+						var mArtist = songList[i].melodyArtist;
+						var mfavorite = songList[i].favorated;
+						$("#listbox").append("<li data-mid='"+mId+"' data-mfavorite='"+mfavorite+"' data-murl='"+mUrl+"' data-mcoverimageurl='"+mCoverImageUrl+"' data-mtitle='"+mTitle+"' data-malbum='"+mAlbum+"' data-martist='"+mArtist+"' id='song" + songList[i].id + "' onclick='allplayer(1,"+songList[i].id+")'><div class='rebou_img'><img src='" + url + songList[i].melodyCoverImage + "' alt='" + url + songList[i].melodyCoverImage + "' /></div><div class='rebou_text'>" + songList[i].melodyName + "</div></li>")
 					}
 					$(".allloadding").hide();
-					banner();
+					$("#changeSong").attr("onclick","changedata(defaultsongdata)");
 				},
 				error: function(xhr, error, ex) {
 					defaultdata();
@@ -141,9 +175,21 @@
 					window.localStorage.setItem('albumCoverImage', $(t).attr("title"));
 				})
 			} else if (tp == 2) {
-				rount('index', 'classifyinfo', function() {
-					window.localStorage.setItem("cty", "1");
+				rount('index', 'indexGetMore', function() {
+					window.localStorage.setItem("com","1")
+					window.localStorage.setItem("getmore", "1");
 					window.localStorage.setItem('keyword', $(t).attr("name"));
+				})
+			} else if (tp == 3) {
+				rount('index', 'indexGetMore', function() {
+					window.localStorage.setItem("com","2");
+					window.localStorage.setItem("getmore", "1");
+					window.localStorage.setItem('keyword',"讲故事");
+					window.localStorage.setItem("melodyAlbum","");
+				})
+			} else if (tp == 4) {
+				rount('index', 'indexGetMore', function() {
+					window.localStorage.setItem("getmore", "2");
 				})
 			}
 		}

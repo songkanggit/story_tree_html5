@@ -100,8 +100,19 @@
 					dataType: 'json',
 					success: function(data) {
 						if (data.state == true) {
-							window.localStorage.setItem("accountId", data.data);
-							window.localStorage.setItem("accountIdTelePhone", $('#username').val());
+							window.localStorage.setItem("accountId", data.data.id);
+							if(data.data.nickName == null){
+								window.localStorage.setItem("nickname", "");
+							}else{
+								window.localStorage.setItem("nickname", data.data.nickName);
+							}
+							if(data.data.icon == null){
+								window.localStorage.setItem("icon", "");
+							}else{
+								window.localStorage.setItem("icon", data.data.icon);
+							}
+							window.localStorage.setItem("accountIdTelePhone", data.data.telephone);
+							sendaccountid();
 							$("#mainbox").load("mine.html");
 							$(".allloadding").hide();
 						} else {

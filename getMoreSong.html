@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>故事树</title>
+		<meta charset="utf-8">
+		<meta name="keywords" content="">
+		<meta name="description" content="">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- No Baidu Siteapp-->
+		<meta http-equiv="Cache-Control" content="no-siteapp" />
+		<!-- Add to homescreen for Chrome on Android -->
+		<meta name="mobile-web-app-capable" content="yes">
+		<!-- Add to homescreen for Safari on iOS -->
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	</head>
+
+	<body>
+		<div class="stapp">
+			<input type="hidden" name="" value="" id="allpage" />
+			<ul class="classifysreach" id="classifysreach">
+			</ul>
+			<ul class="getmoredata" id="listbox">
+			</ul>
+		</div>
+	</body>
+	<script>
+		var page = 1;
+		var blur = "讲故事";
+		var melodyAlbum = "";
+		checkAIEnter(window.localStorage.getItem("keyword"), oldhtmlarr[oldhtmlarr.length - 1], 2);
+		//		专辑曲目初始化
+		function defaultdata(loadding) {
+			if (loadding == 1) {
+				$("#listbox").empty();
+				$(".allloadding").show();
+				$(".noshujubox").hide();
+			} else if (loadding == 2) {
+				$(".uploadding").show();
+			}
+			$.ajax({
+				type: 'POST',
+				url: url + 'melody/queryList.do',
+				data: {
+					page: page,
+					Blur: blur,
+					melodyAlbum: window.localStorage.getItem("melodyAlbum")
+				},
+				dataType: 'json',
+				success: function(data) {
+					for (var i = 0; i < data.data.melodyList.length; i++) {
+						var mId = data.data.melodyList[i].id;
+						var mUrl = url + data.data.melodyList[i].melodyFilePath;
+						var mCoverImageUrl = url + data.data.melodyList[i].melodyCoverImage;
+						var mTitle = data.data.melodyList[i].melodyName;
+						var mAlbum = data.data.melodyList[i].melodyAlbum;
+						var mArtist = data.data.melodyList[i].melodyArtist;
+						var mfavorite = data.data.melodyList[i].favorated;
+						$("#listbox").append("<li data-mid='" + mId + "' data-mfavorite='" + mfavorite + "' data-murl='" + mUrl + "' data-mcoverimageurl='" + mCoverImageUrl + "' data-mtitle='" + mTitle + "' data-malbum='" + mAlbum + "' data-martist='" + mArtist + "' id='song" + data.data.melodyList[i].id + "' onclick='allplayer(1," + data.data.melodyList[i].id + ")'><div class='rebou_img'><img src='" + url + data.data.melodyList[i].melodyCoverImage + "' alt='" + url + data.data.melodyList[i].melodyCoverImage + "' /></div><div class='rebou_text'>" + data.data.melodyList[i].melodyName + "</div></li>")
+					}
+					$("#allpage").val(data.pageSize);
+					$(".allloadding").hide();
+					$(".uploadding").hide();
+				},
+				error: function(xhr, error, ex) {
+					if (xhr.status == '404') {
+						window.location.href = "nohtml.html";
+					}
+					if (xhr.status == '500') {
+						window.location.href = "nohtml.html";
+					}
+				}
+			});
+		}
+
+		function defaultclassify() {
+			$.ajax({
+				type: 'POST',
+				url: url + 'melody/queryList.do',
+				dataType: 'json',
+				success: function(data) {
+					for (var i = 0; i < data.data.categoryList.length; i++) {
+						$("#classifysreach").append("<li onclick='sreachkey(this)'>" + data.data.categoryList[i] + "</li>")
+						if (blur == data.data.categoryList[i]) {
+							$("#classifysreach li").eq(i).addClass("searchli");
+						}
+					}
+				},
+				error: function(xhr, error, ex) {
+					if (xhr.status == '404') {
+						window.location.href = "nohtml.html";
+					}
+					if (xhr.status == '500') {
+						window.location.href = "nohtml.html";
+					}
+				}
+			});
+		}
+
+		function sreachkey(t) {
+			$(t).addClass("searchli").siblings("li").removeClass("searchli");
+			$("#getmoredata").empty();
+			page = 1;
+			blur = $(t).text();
+			defaultdata(1);
+		}
+
+		defaultdata(1);
+		defaultclassify();
+		scrollpage('true');
+	</script>
+
+</html>

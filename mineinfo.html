@@ -20,14 +20,14 @@
 	<body>
 		<div class="stapp">
 			<div class="mineinfo">
-				<div class="headimg" onclick="uploadimg();">头像
-					<div class="img"><img src="img/loginlogo.png" alt="img/loginlogo.png" /></div>
+				<div class="headimg">头像
+					<div class="img" onclick="uploadimg();"><img src="" alt="" id="headimg" /></div>
 				</div>
 				<div class="name" onclick="showchange(this);">昵称
-					<div class="name_text">15932119504</div>
+					<div class="name_text" id="username"></div>
 				</div>
 				<div class="name" style="background: none;">手机号
-					<div class="name_text">15932119504</div>
+					<div class="name_text" id="userphone"></div>
 				</div>
 			</div>
 			<div class="quit" onclick="quit()">安全退出</div>
@@ -36,25 +36,67 @@
 			<div class="closemask" onclick="closemask('editname')"></div>
 			<div class="editbox">
 				<div class="editinput"><input type="text" name="" value="" id="name" placeholder="0/11" /></div>
-				<div class="true" onclick="">确定</div>
+				<div class="true" onclick="editname();">确定</div>
 			</div>
 		</div>
 		<form method="post" action="" enctype="multipart/form-data" id="coverImage" style="display: none;">
 			<input type="text" name="fileName" id="Imagetext" value="" />
-			<input type="file" name="" value="" id="headimg" accept="image/*" onchange="subimtimgBtn();" />
+			<input type="file" name="file" id="ImageFile" value="" onchange="subimtimgBtn();" />
 		</form>
 	</body>
 	<script>
 		$(".noshujubox").hide();
+		if (window.localStorage.getItem("icon") == "") {
+			$("#headimg").attr("src", 'img/loginlogo.png');
+		} else {
+			$("#headimg").attr("src", url + window.localStorage.getItem("icon"));
+		}
+		if (window.localStorage.getItem("nickname") == "") {
+			$("#username").text(window.localStorage.getItem("accountIdTelePhone"));
+		} else {
+			$("#username").text(window.localStorage.getItem("nickname"));
+		}
+		$("#userphone").text(window.localStorage.getItem("accountIdTelePhone"));
 		checkAIEnter("个人中心", oldhtmlarr[oldhtmlarr.length - 1], 1);
+
 		function showchange(t, et) {
 			$(".editname input").val($(t).find(".name_text").text())
 			$(".editname").show();
 			$(".editname .true").attr("onclick", "editname()");
 		}
 
-		function editname() {}
-
+		function editname() {
+			if ($("#name").val().length > 11) {
+				showalert("用户名在不能大于11位");
+			} else {
+				$(".allloadding").show();
+				$.ajax({
+					type: 'POST',
+					url: url + 'account/update.do',
+					data: {
+						id: window.localStorage.getItem("accountId"),
+						nickName: $("#name").val()
+					},
+					dataType: 'json',
+					success: function(data) {
+						if (data.state == true) {
+							window.localStorage.setItem("nickname", $(".editname input").val());
+							$("#username").text($(".editname input").val());
+							$(".editname").hide();
+							$(".allloadding").hide();
+						}
+					},
+					error: function(xhr, error, ex) {
+						if (xhr.status == '404') {
+							window.location.href = "nohtml.html";
+						}
+						if (xhr.status == '500') {
+							window.location.href = "nohtml.html";
+						}
+					}
+				});
+			}
+		}
 		loadclosemaskheight();
 		scrollpage('false');
 	</script>

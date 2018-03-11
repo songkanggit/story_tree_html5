@@ -58,7 +58,6 @@
 				return;
 			}
 			rount('sreach', 'classifyinfo', function() {
-//				window.localStorage.setItem("cty", "2");
 				window.localStorage.setItem('keyword', $("#sreachinput").val())
 			});
 		}
@@ -95,11 +94,15 @@
 			tosreachsong();
 		}
 		//		初始化数据
-		function defaultdata() {
-			$(".noshujubox").hide();
-			$("#sreach2").empty();
-			$("#sreach3").empty();
-			$(".allloadding").show();
+		function defaultdata(loadding) {
+			if(loadding == 1){
+				$(".noshujubox").hide();
+				$("#sreach2").empty();
+				$("#sreach3").empty();
+				$(".allloadding").show();
+			}else if(loadding == 2){
+				$(".uploadding").show();
+			}
 			$.ajax({
 				type: 'POST',
 				url: url + 'melody/queryList.do',
@@ -123,7 +126,7 @@
 				}
 			});
 		}
-		defaultdata();
+		defaultdata(1);
 		writesreachsong();
 		scrollpage('false');
 	</script>

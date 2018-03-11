@@ -8,6 +8,7 @@ body,html{background:#f4f5f7;}
 .banner a{display: block;width: 100%;height: 100%;}
 .banner img{width: 100%;}
 .banner .swiper-container{width: 100%;height: 100%;}
+.banner .swiper-container-horizontal>.swiper-pagination-bullets, .banner .swiper-pagination-custom, .banner .swiper-pagination-fraction{bottom: 6px;}
 .banner .swiper-pagination-bullet{background: #fff;opacity: 6;}
 .banner .swiper-pagination-bullet-active{background: #e53232;}
 /*分类*/
@@ -21,13 +22,33 @@ body,html{background:#f4f5f7;}
 .classifybox li .readcounty{background-image:url(../img/readcounty.png) ;}
 .classifybox li .classify{background-image:url(../img/classify.png) ;}
 /*精品推荐*/
-.reboutitle{width: 100%;height: .96rem;font: .36rem/.96rem 黑体;color: #333;text-align: center;}
-.rebou{width: 100%;overflow: hidden;padding-top:.1rem;position: relative;}
+.reboutitle{width: 100%;height: 1.3rem;position: relative;}
+.reboutitle .albumtitle{width: 100%;height: .80rem;font: .36rem/.80rem 黑体;color: #333;text-align: center;}
+.reboutitle .albumDir{width: 100%;height: .54rem;font: .26rem/.54rem 黑体;color: #999;text-align: center;}
+.reboutitle .getmore{width: .7rem;height: .26rem;padding-right: .24rem;font:.26rem 黑体;color:#ff1f43;background: url(../img/getmore.png) right center no-repeat;position: absolute;top: .5rem;right: .2rem;background-size:auto 100%;}
+.changedatabox{width: 100%;height: .8rem;border-top: .01rem solid #f4f5f7;}
+.changedatabox .changedata{width: 1rem;margin:0px auto;padding-right:.35rem;height: 100%;font: .3rem/.8rem 黑体;color:#333;background: url(../img/changedata.png) right center no-repeat;background-size:.24rem .24rem; }
+.margin24{border-top: .24rem solid #f4f5f7;}
+.rebou,.rebousong,.getmoredata{width: 100%;overflow: hidden;padding-top:.1rem;position: relative;}
+.rebou{height: 6.24rem;}
+.rebousong{height: 6.3rem;}
+.getmoredata{padding-top: .2rem;}
 .rebou li{width: 2.44rem;height: 3.12rem;float: left;margin-right: .09rem;overflow: hidden;}
+.rebousong li,.getmoredata li{width: 3.7rem;height: 3.15rem;float: left;margin-right: .1rem;overflow: hidden;}
+.getmoredata .albumgetmore{height: 4.58rem;}
 .rebou li:nth-child(3n){margin: 0rem;}
+.rebousong li:nth-child(2n),.getmoredata li:nth-child(2n){margin: 0rem;}
 .rebou li .rebou_img{width:100%;height: 2.44rem;}
-.rebou li .rebou_img img{width:100%;height: 100%;}
-.rebou li .rebou_text{width: 100%;height: .68rem;font: .28rem/.68rem 黑体;color: #333;text-align: center;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+.rebousong li .rebou_img,.getmoredata li .rebou_img{width: 100%;height:2.3rem;}
+.getmoredata li .getmore_img{height: 3.7rem;}
+.rebou li .rebou_img img,.rebousong li .rebou_img img,.getmoredata li .rebou_img img,.getmoredata li .getmore_img img{width:100%;height: 100%;}
+.rebou li .rebou_text,.rebousong li .rebou_text,.getmoredata li .rebou_text{width: 100%;height: .68rem;font: .28rem/.68rem 黑体;color: #333;text-align: left;text-indent:.2rem;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+
+/*更多*/
+.classifysreach{width: 100%;height: .91rem;}
+.classifysreach li{width: 25%;height: .9rem;float: left;font: .28rem/.9rem 黑体;color: #333;text-align: center;}
+.classifysreach .searchli{border-bottom: .01rem solid #ff1f43;}
+
 /*搜索页面*/
 /*搜索框*/
 .sreach{width: 6.9rem;height: .6rem;margin: .32rem auto;}

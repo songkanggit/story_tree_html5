@@ -1,6 +1,6 @@
-//var url = "https://admin.guostory.com/";
-//var url = "http://192.168.0.105:8080/storytree/";
-var url = "https://xcx.guostory.com/";
+var url = "https://admin.guostory.com/";
+//var url = "http://192.168.0.120:8080/storytree/";
+//var url = "https://xcx.guostory.com/";
 //初始化黑色蒙版点击区域高度
 function loadclosemaskheight() {
 	var WH = $(window).height();
@@ -87,9 +87,9 @@ function loadsreach() {
 }
 //路由
 var oldhtmlarr = [];
+
 function rount(oldhtml, newhtml, callback) {
-	oldhtmlarr.push(oldhtml+".html");
-//	console.log(oldhtmlarr)
+	oldhtmlarr.push(oldhtml + ".html");
 	$("#mainbox").load(newhtml + ".html");
 	callback();
 }
@@ -101,10 +101,10 @@ function judelogin(nocallback, okcallback) {
 		okcallback();
 	}
 }
-//		上传图片
+//		上传头像
 function uploadimg() {
 	$("#coverImage").attr("action", url + "common/imageUpload.do");
-	$('#headimg').trigger('click');
+	$('#ImageFile').trigger('click');
 }
 
 function subimtimgBtn() {
@@ -114,11 +114,23 @@ function subimtimgBtn() {
 		url: $(form).attr("action"),
 		type: 'post',
 		success: function(data) {
-			window.console.log(data);
 			if (data.code == 0) {
-				$("#Image").val($("#ImageFile").val());
+
 				$("#Imagetext").val(data.data.src);
-				$(".allloadding").hide();
+				$("#headimg").attr("src", url + data.data.src);
+				window.localStorage.setItem("icon", data.data.src);
+				$.ajax({
+					type: 'POST',
+					url: url + 'account/update.do',
+					data: {
+						id: window.localStorage.getItem("accountId"),
+						icon: data.data.src
+					},
+					dataType: 'json',
+					success: function(data) {
+						$(".allloadding").hide();
+					}
+				});
 			} else {
 				showalert(data.msg)
 			}
@@ -135,16 +147,33 @@ function nextpage() {
 	defaultdata(2);
 }
 
+function changedata(okcallback) {
+	okcallback();
+}
+
+function getRandomArrayElements(arr, count) {
+	var shuffled = arr.slice(0),
+		i = arr.length,
+		min = i - count,
+		temp, index;
+	while (i-- > min) {
+		index = Math.floor((i + 1) * Math.random());
+		temp = shuffled[index];
+		shuffled[index] = shuffled[i];
+		shuffled[i] = temp;
+	}
+	return shuffled.slice(min);
+}
+
 function scrollpage(stype) {
-	if (stype == 'true') {
-		$(window).scroll(function() {
-			var bot = 1;
-			if ((bot + $(window).scrollTop()) > ($(document).height() - $(window).height())) {
+	$(window).scroll(function() {
+		var bot = 1;
+		if ((bot + $(window).scrollTop()) > ($(document).height() - $(window).height())) {
+			if (stype == 'true') {
 				nextpage();
 			}
-		});
-	}
-
+		}
+	});
 }
 //添加收藏
 function showCollect(t, id) {
@@ -163,7 +192,6 @@ function showCollect(t, id) {
 				},
 				dataType: 'json',
 				success: function(data) {
-					window.console.log(data);
 					if (data.state == true) {
 						$(".allloadding").hide();
 						$(t).addClass("collectioned");
@@ -182,7 +210,6 @@ function showCollect(t, id) {
 				},
 				dataType: 'json',
 				success: function(data) {
-					window.console.log(data);
 					if (data.state == true) {
 						$(".allloadding").hide();
 						$(t).removeClass("collectioned");
@@ -258,65 +285,260 @@ function quit() {
 }
 //转换时间
 function getLocalTime(nS) {
-	return new Date(parseInt(nS)).toLocaleString().replace(/年月|下午|上午/g, "").replace(/日/g, "").replace("/", "-").replace("/", "-");
+	var date = new Date(nS);
+	var Y = date.getFullYear() + '-';
+	var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+	var D = (date.getDate() < 10 ? '0' + (date.getDate()) : date.getDate()) + ' ';
+	var h = (date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours()) + ':';
+	var m = (date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes()) + ':';
+	var s = (date.getSeconds() < 10 ? '0' + (date.getSeconds()) : date.getSeconds());
+	return Y + M + D + h + m + s;
+}
+
+function judetelphone(Icallback, Acallback, Pcallback) {
+	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+		//判断iPhone|iPad|iPod|iOS
+		Icallback()
+	} else if (/(Android)/i.test(navigator.userAgent)) {
+		//判断Android
+		Acallback();
+	} else { //pc
+		Pcallback();
+	};
 }
 //判断客户端进入页面
 function checkAIEnter(title, historyhtml, layerDepth) {
-	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { 
-		//判断iPhone|iPad|iPod|iOS
-//		alert(title);
-		var paras = {title:title,url:historyhtml,layerDepth:layerDepth};
-		IOS.loadWebPage(JSON.stringify(paras));
-	} else if (/(Android)/i.test(navigator.userAgent)) { 
-		//判断Android
-//		alert(title);
-		var paras = {title:title,url:historyhtml,layerDepth:layerDepth};
-		Android.loadWebPage(JSON.stringify(paras));
-	} else { //pc
-		alert(title)
-	};
-}
-//全部播放
-function allplayer(idbox) {
-	var allplayer = [];
-	for (var i = 0; i < $("#" + idbox + " li").length; i++) {
+	judetelphone(function() {
+		//		alert(title);
 		var paras = {
-			mUrl: $("#" + idbox + " li").eq(i).attr("data-murl"),
-			mCoverImageUrl: $("#" + idbox + " li").eq(i).attr("data-mcoverimageurl"),
-			mTitle: $("#" + idbox + " li").eq(i).attr("data-mtitle"),
-			mAlbum: $("#" + idbox + " li").eq(i).attr("data-malbum"),
-			mArtist: $("#" + idbox + " li").eq(i).attr("data-martist"),
-			mFavorite:$("#" + idbox + " li").eq(i).attr("data-mfavorite")
+			title: title,
+			url: historyhtml,
+			layerDepth: layerDepth
+		};
+		window.webkit.messageHandlers.loadWebPage.postMessage(JSON.stringify(paras))
+	}, function() {
+//		alert(title);
+		var paras = {
+			title: title,
+			url: historyhtml,
+			layerDepth: layerDepth
+		};
+		Android.loadWebPage(JSON.stringify(paras));
+	}, function() {
+		alert(title)
+	})
+}
+//全部播放或单个播放
+function allplayer(d, id) {
+	var allplayer = [];
+	if (d == 0) {
+		for (var i = 0; i < $("#listbox li").length; i++) {
+			var paras = {
+				mId: $("#listbox li").eq(i).attr("data-mid"),
+				mUrl: $("#listbox li").eq(i).attr("data-murl"),
+				mCoverImageUrl: $("#listbox li").eq(i).attr("data-mcoverimageurl"),
+				mTitle: $("#listbox li").eq(i).attr("data-mtitle"),
+				mAlbum: $("#listbox li").eq(i).attr("data-malbum"),
+				mArtist: $("#listbox li").eq(i).attr("data-martist"),
+				mFavorite: $("#listbox li").eq(i).attr("data-mfavorite"),
+			}
+			allplayer.push(paras);
 		}
-		allplayer.push(paras);
+		var newparas = {
+			musicList: allplayer,
+			position: 0
+		};
+	} else if (d == 1) {
+		for (var i = 0; i < $("#listbox li").length; i++) {
+			if (id == $("#listbox li").eq(i).attr("id").substring(4)) {
+				var showposition = i;
+			}
+			var paras = {
+				mId: $("#listbox li").eq(i).attr("data-mid"),
+				mUrl: $("#listbox li").eq(i).attr("data-murl"),
+				mCoverImageUrl: $("#listbox li").eq(i).attr("data-mcoverimageurl"),
+				mTitle: $("#listbox li").eq(i).attr("data-mtitle"),
+				mAlbum: $("#listbox li").eq(i).attr("data-malbum"),
+				mArtist: $("#listbox li").eq(i).attr("data-martist"),
+				mFavorite: $("#listbox li").eq(i).attr("data-mfavorite"),
+			}
+			allplayer.push(paras);
+		}
+		var newparas = {
+			musicList: allplayer,
+			position: showposition
+		};
 	}
-	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { //判断iPhone|iPad|iPod|iOS
-		IOS.playMusic(allplayer);
-	} else if (/(Android)/i.test(navigator.userAgent)) { //判断Android
-		Android.playMusic(allplayer);
+	judetelphone(function() {
+		window.webkit.messageHandlers.playMusic.postMessage(JSON.stringify(newparas))
+	}, function() {
+		Android.playMusic(JSON.stringify(newparas));
+	}, function() {
+		alert(JSON.stringify(newparas))
+	})
+}
+//banner图点击播放
+function bannerplayer(id) {
+	var allplayer = [];
+	var bannerid = ['184', '155', '421', '420'];
+	for (var i = 0; i < bannerid.length; i++) {
+		if (id == bannerid[i]) {
+			var showposition = i;
+		}
+	}
+	$.ajax({
+		type: 'POST',
+		url: url + 'app/favoriteMelody/query.do',
+		data: {
+			melodyId: bannerid[0],
+			accountId: window.localStorage.getItem("accountId")
+		},
+		dataType: 'json',
+		success: function(data) {
+			var paras = {
+				mId: data.data.id,
+				mUrl: url + data.data.melodyFilePath,
+				mCoverImageUrl: url + data.data.melodyCoverImage,
+				mTitle: data.data.melodyName,
+				mAlbum: data.data.melodyAlbum,
+				mArtist: data.data.melodyArtist,
+				mFavorite: data.data.favorated
+			};
+			allplayer.push(paras);
+			$.ajax({
+				type: 'POST',
+				url: url + 'app/favoriteMelody/query.do',
+				data: {
+					melodyId: bannerid[1],
+					accountId: window.localStorage.getItem("accountId")
+				},
+				dataType: 'json',
+				success: function(data) {
+					var paras = {
+						mId: data.data.id,
+						mUrl: url + data.data.melodyFilePath,
+						mCoverImageUrl: url + data.data.melodyCoverImage,
+						mTitle: data.data.melodyName,
+						mAlbum: data.data.melodyAlbum,
+						mArtist: data.data.melodyArtist,
+						mFavorite: data.data.favorated
+					};
+					allplayer.push(paras);
+					$.ajax({
+						type: 'POST',
+						url: url + 'app/favoriteMelody/query.do',
+						data: {
+							melodyId: bannerid[2],
+							accountId: window.localStorage.getItem("accountId")
+						},
+						dataType: 'json',
+						success: function(data) {
+							var paras = {
+								mId: data.data.id,
+								mUrl: url + data.data.melodyFilePath,
+								mCoverImageUrl: url + data.data.melodyCoverImage,
+								mTitle: data.data.melodyName,
+								mAlbum: data.data.melodyAlbum,
+								mArtist: data.data.melodyArtist,
+								mFavorite: data.data.favorated
+							};
+							allplayer.push(paras);
+							$.ajax({
+								type: 'POST',
+								url: url + 'app/favoriteMelody/query.do',
+								data: {
+									melodyId: bannerid[3],
+									accountId: window.localStorage.getItem("accountId")
+								},
+								dataType: 'json',
+								success: function(data) {
+									var paras = {
+										mId: data.data.id,
+										mUrl: url + data.data.melodyFilePath,
+										mCoverImageUrl: url + data.data.melodyCoverImage,
+										mTitle: data.data.melodyName,
+										mAlbum: data.data.melodyAlbum,
+										mArtist: data.data.melodyArtist,
+										mFavorite: data.data.favorated
+									};
+									allplayer.push(paras);
+									var newparas = {
+										musicList: allplayer,
+										position: showposition
+									};
+									judetelphone(function() {
+										window.webkit.messageHandlers.playMusic.postMessage(JSON.stringify(newparas))
+									}, function() {
+										Android.playMusic(JSON.stringify(newparas));
+									}, function() {
+										alert(JSON.stringify(newparas))
+									})
+								}
+							});
+						}
+					});
+				}
+			});
+		}
+	});
+}
+//进入我的钱包
+function entermywalet(mytype) {
+	if (mytype == 1) {
+		showalert("此功能尚未开通");
+	} else {
+		judetelphone(function() {
+			judelogin(function() {
+				showalert("请先登录您的账号");
+			}, function() {
+				window.webkit.messageHandlers.wallet.postMessage(null)
+			})
+		}, function() {
+			judelogin(function() {
+				showalert("请先登录您的账号");
+			}, function() {
+				Android.wallet();
+			})
+		}, function() {
+			alert("我的钱包");
+		})
 	}
 }
-//单个播放
-function oneplayer(id) {
-	if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { //判断iPhone|iPad|iPod|iOS
-		var paras = [{
-			mUrl: $("#song" + id).attr("data-murl"),
-			mCoverImageUrl: $("#song" + id).attr("data-mcoverimageurl"),
-			mTitle: $("#song" + id).attr("data-mtitle"),
-			mAlbum: $("#song" + id).attr("data-malbum"),
-			mArtist: $("#song" + id).attr("data-martist"),
-			mFavorite:$("#song" + id).attr("data-mfavorite")
-		}];
-		IOS.playMusic(paras);
-	} else if (/(Android)/i.test(navigator.userAgent)) { //判断Android
-		var paras = [{
-			mUrl: $("#song" + id).attr("data-murl"),
-			mCoverImageUrl: $("#song" + id).attr("data-mcoverimageurl"),
-			mTitle: $("#song" + id).attr("data-mtitle"),
-			mAlbum: $("#song" + id).attr("data-malbum"),
-			mArtist: $("#song" + id).attr("data-martist"),
-			mFavorite:$("#song" + id).attr("data-mfavorite")
-		}];
-		Android.playMusic(paras);
+//进入成为vip
+function entermember(mytype) {
+	if (mytype == 1) {
+		showalert("此功能尚未开通");
+	} else {
+		judetelphone(function() {
+			judelogin(function() {
+				showalert("请先登录您的账号");
+			}, function() {
+				window.webkit.messageHandlers.member.postMessage(null)
+			})
+		}, function() {
+			judelogin(function() {
+				showalert("请先登录您的账号");
+			}, function() {
+				Android.member();
+			})
+		}, function() {
+			alert("成为vip");
+		})
 	}
+}
+//登录成功后传递accountid
+function sendaccountid() {
+	judetelphone(function() {
+		var newparas = {
+			accountId: window.localStorage.getItem("accountId")
+		};
+		window.webkit.messageHandlers.returnLogin.postMessage(JSON.stringify(newparas))
+	}, function() {
+		var newparas = {
+			accountId: window.localStorage.getItem("accountId")
+		};
+		Android.returnLogin(JSON.stringify(newparas));
+	}, function() {
+		alert("成为vip");
+	})
 }

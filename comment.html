@@ -129,10 +129,10 @@
 			}
 			$.ajax({
 				type: 'POST',
-				url: url + 'comment/queryList.do',
+				url: url + 'app/comment/queryList.do',
 				data: {
 					page: page,
-					melodyId: melodyId
+					melodyId: "111"
 				},
 				dataType: 'json',
 				success: function(data) {

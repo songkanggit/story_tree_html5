@@ -21,7 +21,7 @@
 			<input type="hidden" name="" value="" id="allpage" />
 			<div class="topbox">
 				<div class="top">
-					<div class="allplayer allpayerlogo" onclick="allplayer('listbox')">全部播放</div>
+					<div class="allplayer allpayerlogo" onclick="allplayer(0)">全部播放</div>
 				</div>
 			</div>
 			<ul class="listbox" id="listbox">
@@ -31,23 +31,23 @@
 	<script>
 		var arr = [];
 		var page = 1;
-		//		删除下载中歌曲
+		//		删除故事集列表曲目
 		function truefunc() {
 			$(".allloadding").show();
 			$.ajax({
 				type: 'POST',
-				url: url + 'app/accountStoryCollection/delete.do',
+				url: url + 'app/accountStoryCollectionList/delete.do',
 				data: {
-					idList: arr
+					idList: arr,
+					accountId:window.localStorage.getItem("accountId")
 				},
 				dataType: 'json',
 				success: function(data) {
 					$(".allloadding").hide();
 					if (data.state == true) {
 						arr = [];
-						$("#storyarr").empty();
+						$("#listbox").empty();
 						page = 1;
-						closemask('addoreditbox');
 						defaultdata();
 					} else {
 						showalert("数据错误，请重试");
@@ -66,6 +66,7 @@
 
 		function defaultdata(loadding) {
 			if(loadding == 1){
+				$("#listbox").empty();
 				$(".allloadding").show();
 				$(".noshujubox").hide();
 			}else if(loadding == 2){
@@ -87,15 +88,16 @@
 							$(".noshujubox").show();
 						}else{
 							for (var i = 0; i < data.data.length; i++) {
+								var mId = data.data[i].id;
 								var mUrl = url+data.data[i].melodyFilePath;
 								var mCoverImageUrl = url+data.data[i].melodyCoverImage;
 								var mTitle = data.data[i].melodyName;
 								var mAlbum = data.data[i].melodyAlbum;
 								var mArtist = data.data[i].melodyArtist;
 								var mfavorite = data.data[i].favorated;
-								$("#listbox").append("<li data-mfavorite='"+mfavorite+"' data-murl='"+mUrl+"' data-mcoverimageurl='"+mCoverImageUrl+"' data-mtitle='"+mTitle+"' data-malbum='"+mAlbum+"' data-martist='"+mArtist+"' id='song" + data.data[i].id + "'><div class='listimg'><img src='" + url + data.data[i].melodyCoverImage + "' alt='" + url + data.data[i].melodyCoverImage + "' /></div><div class='listcon'><div class='conbox' onclick='oneplayer(" + data.data[i].id + ")'><p class='contitle'>" + data.data[i].melodyName + "</p><p class='condir'>" + data.data[i].melodyArtist + "·" + data.data[i].melodyAlbum + "</p></div><div class='collection' onclick='showCollect(this," + data.data[i].id + ")'></div></li>")
+								$("#listbox").append("<li data-mid='"+mId+"' data-mfavorite='"+mfavorite+"' data-murl='"+mUrl+"' data-mcoverimageurl='"+mCoverImageUrl+"' data-mtitle='"+mTitle+"' data-malbum='"+mAlbum+"' data-martist='"+mArtist+"' id='song" + data.data[i].id + "'><div class='listimg'><img src='" + url + data.data[i].melodyCoverImage + "' alt='" + url + data.data[i].melodyCoverImage + "' /></div><div class='listcon'><div class='conbox' onclick='allplayer(1," + data.data[i].id + ")'><p class='contitle'>" + data.data[i].melodyName + "</p><p class='condir'>" + data.data[i].melodyArtist + "·" + data.data[i].melodyAlbum + "</p></div><div class='collection' onclick='showCollect(this," + data.data[i].id + ")'></div></li>")
 								if (data.data[i].favorated == true) {
-									$("#" + data.data[i].id + " .collection").addClass("collectioned");
+									$("#song" + data.data[i].id + " .collection").addClass("collectioned");
 								}
 							}
 						}
@@ -114,13 +116,14 @@
 				});
 			} else if (window.localStorage.getItem("mytype") == '2') {
 				$(".noshujubox").hide();
-				checkAIEnter("我的下载", oldhtmlarr[oldhtmlarr.length - 1], 1);
+				checkAIEnter(window.localStorage.getItem("storyname"), oldhtmlarr[oldhtmlarr.length - 1], 1);
 				$.ajax({
 					type: 'POST',
-					url: url + 'app/favoriteMelody/queryList.do',
+					url: url + 'app/accountStoryCollectionList/queryList.do',
 					data: {
 						page: page,
-						accountId: window.localStorage.getItem("accountId")
+						accountId: window.localStorage.getItem("accountId"),
+						collectionId:window.localStorage.getItem("storyid")
 					},
 					dataType: 'json',
 					success: function(data) {
@@ -129,13 +132,14 @@
 						}else{
 							console.log(data)
 							for (var i = 0; i < data.data.length; i++) {
+								var mId = data.data[i].id;
 								var mUrl = url+data.data[i].melodyFilePath;
 								var mCoverImageUrl = url+data.data[i].melodyCoverImage;
 								var mTitle = data.data[i].melodyName;
 								var mAlbum = data.data[i].melodyAlbum;
 								var mArtist = data.data[i].melodyArtist;
 								var mfavorite = data.data[i].favorated;
-								$("#listbox").append("<li data-mfavorite='"+mfavorite+"' data-murl='"+mUrl+"' data-mcoverimageurl='"+mCoverImageUrl+"' data-mtitle='"+mTitle+"' data-malbum='"+mAlbum+"' data-martist='"+mArtist+"' id='song" + data.data[i].id + "'><div class='listimg'><img src='" + url + data.data[i].melodyCoverImage + "' alt='" + url + data.data[i].melodyCoverImage + "' /></div><div class='listcon'><div class='conbox' onclick='oneplayer(" + data.data[i].id + ")'><p class='contitle'>" + data.data[i].melodyName + "</p><p class='condir'>" + data.data[i].melodyArtist + "·" + data.data[i].melodyAlbum + "</p></div><div class='del' onclick='del(" + data.data[i].id + ")'></div></li>")
+								$("#listbox").append("<li data-mid='"+mId+"' data-mfavorite='"+mfavorite+"' data-murl='"+mUrl+"' data-mcoverimageurl='"+mCoverImageUrl+"' data-mtitle='"+mTitle+"' data-malbum='"+mAlbum+"' data-martist='"+mArtist+"' id='song" + data.data[i].id + "'><div class='listimg'><img src='" + url + data.data[i].melodyCoverImage + "' alt='" + url + data.data[i].melodyCoverImage + "' /></div><div class='listcon'><div class='conbox' onclick='allplayer(1," + data.data[i].id + ")'><p class='contitle'>" + data.data[i].melodyName + "</p><p class='condir'>" + data.data[i].melodyArtist + "·" + data.data[i].melodyAlbum + "</p></div><div class='del' onclick='del(" + data.data[i].id + ")'></div></li>")
 							}
 						}
 						$("#allpage").val(data.pageSize);

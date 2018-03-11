@@ -29,7 +29,7 @@
 							<div class="btn" onclick="tologin(1);">登录</div>
 							<div class="btn" onclick="tologin(2);">注册</div>
 						</div>
-						<div class="myphone">15932119504</div>
+						<div class="myphone"></div>
 					</div>
 					<div class="mine_caozuo">
 						<div class="caozuobox" onclick="tomylist(1)">
@@ -52,12 +52,12 @@
 						<div class="listname">我的故事集</div>
 						<div class="to"></div>
 					</li>
-					<li onclick="torecharge();">
+					<li onclick="entermywalet(1);">
 						<div class="logo logo2"></div>
 						<div class="listname">我的钱包</div>
 						<div class="to"></div>
 					</li>
-					<li onclick="tochangevip();">
+					<li onclick="entermember(1);">
 						<div class="logo logo3"></div>
 						<div class="listname">加入会员</div>
 						<div class="to"></div>
@@ -69,28 +69,41 @@
 	<script>
 		//		判断登录状态
 		judelogin(function() {
-				checkAIEnter("我的","", 0);
+				checkAIEnter("我的", "", 0);
 				$(".minehead_img img").attr("src", 'img/nologinheadimg.png');
 				$(".minehead_img img").attr("alt", '没有登录头像');
-				$(".VIP").css("background-image","url(img/vip1.png)");
+				$(".VIP").css("background-image", "url(img/vip1.png)");
 				$(".loginbtn").show();
 				$(".myphone").hide();
 			}, function() {
-				checkAIEnter("我的","", 0);
-				$(".minehead_img img").attr("src", 'img/loginhead.png');
+				checkAIEnter("我的", "", 0);
+				if (window.localStorage.getItem("icon") == "") {
+					$(".minehead_img img").attr("src", 'img/loginhead.png');
+				} else {
+					$(".minehead_img img").attr("src", url + window.localStorage.getItem("icon"));
+				}
 				$(".minehead_img img").attr("alt", '登录头像');
-				$(".VIP").css("background-image","url(img/vip2.png)");
+				if (window.localStorage.getItem("vip") == "false") {
+					$(".VIP").css("background-image", "url(img/vip1.png)");
+				} else if (window.localStorage.getItem("vip") == "1") {
+					$(".VIP").css("background-image", "url(img/vip2.png)");
+				}
 				$(".loginbtn").hide();
 				$(".myphone").show();
+				if (window.localStorage.getItem("nickname") == "") {
+					$(".myphone").text(window.localStorage.getItem("accountIdTelePhone"));
+				} else {
+					$(".myphone").text(window.localStorage.getItem("nickname"));
+				}
 			})
 			//		跳转我的收藏，我的下载，我的购买
 		function tomylist(mytype) {
 			judelogin(function() {
 				showalert("请先登录您的账号");
 			}, function() {
-				if(mytype == 3){
+				if (mytype == 3 || mytype == 2) {
 					showalert("此功能尚未开通");
-				}else{
+				} else {
 					rount('mine', 'mylist', function() {
 						window.localStorage.setItem("mytype", mytype);
 					});
@@ -115,27 +128,27 @@
 				});
 			})
 		}
-		function tochangevip() {
-			judelogin(function() {
-				showalert("请先登录您的账号");
-			}, function() {
-				rount('mine', 'changevip', function() {});
-			})
-		}
+		//		function tochangevip() {
+		//			judelogin(function() {
+		//				showalert("请先登录您的账号");
+		//			}, function() {
+		//				rount('mine', 'changevip', function() {});
+		//			})
+		//		}
 		//		跳转登录
 		function tologin(logintype) {
 			rount('mine', 'login', function() {
-				window.localStorage.setItem("logintype",logintype);
+				window.localStorage.setItem("logintype", logintype);
 			});
 		}
-		//		跳转交易
-		function torecharge() {
-			judelogin(function() {
-				showalert("请先登录您的账号");
-			}, function() {
-				rount('mine', 'recharge', function() {});
-			})
-		}
+		//		//		跳转交易
+		//		function torecharge() {
+		//			judelogin(function() {
+		//				showalert("请先登录您的账号");
+		//			}, function() {
+		//				rount('mine', 'recharge', function() {});
+		//			})
+		//		}
 		scrollpage('false');
 	</script>
 

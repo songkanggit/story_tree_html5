@@ -27,9 +27,14 @@
 		checkAIEnter("发现","", 0);
 		var page = 1;
 		//		发现数据初始化
-		function defaultdata() {
-			$(".noshujubox").hide();
-			$(".allloadding").show();
+		function defaultdata(loadding) {
+			if(loadding == 1){
+				$("#findbox").empty();
+				$(".allloadding").show();
+				$(".noshujubox").hide();
+			}else if(loadding == 2){
+				$(".uploadding").show();
+			}
 			$.ajax({
 				type: 'POST',
 				url: url + 'article/queryList.do',
@@ -42,8 +47,9 @@
 					if(data.data.length == 0){
 						$(".noshujubox").show();
 					}else{
+						console.log(data)
 						for (var i = 0; i < data.data.length; i++) {
-							$("#findbox").append("<div class='findlist' onclick='tofindinfo(this," + data.data[i].id + ")'><div class='find_img'><img src='" + url + data.data[i].coverImageUrl + "' alt='" + url + data.data[i].coverImageUrl + "' /></div><div class='find_con'><div class='find_title'>" + data.data[i].articleTitle + "</div><div class='find_author'>作者:" + data.data[i].articleTitle + "</div><div class='find_text'>" + data.data[i].summary + "</div><div class='find_dir'><div class='find_seeshu'>" + data.data[i].pageView + "</div><div class='find_time'>" + getLocalTime(data.data[i].createTime) + "</div></div></div></div>")
+							$("#findbox").append("<div class='findlist' onclick='tofindinfo(this," + data.data[i].id + ")'><div class='find_img'><img src='" + url + data.data[i].coverImageUrl + "' alt='" + url + data.data[i].coverImageUrl + "' /></div><div class='find_con'><div class='find_title'>" + data.data[i].articleTitle + "</div><div class='find_author'>作者:" + data.data[i].author + "</div><div class='find_text'>" + data.data[i].summary + "</div><div class='find_dir'><div class='find_seeshu'>" + data.data[i].pageView + "</div><div class='find_time'>" + getLocalTime(data.data[i].createTime) + "</div></div></div></div>")
 						}
 					}
 					$("#allpage").val(data.pageSize);
@@ -59,8 +65,8 @@
 				}
 			});
 		}
-		defaultdata();
-		scrollpage('true');
+		defaultdata(1);
+		scrollpage('false');
 //		跳转发现详情
 		function tofindinfo(t, id) {
 			rount('find', 'findInfo', function() {
